@@ -10,6 +10,8 @@
 
 @interface MapViewController ()
 
+@property (strong, nonatomic) MKMapView *mapView;
+
 @end
 
 @implementation MapViewController
@@ -28,6 +30,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.mapView];
 }
 
 - (void)didReceiveMemoryWarning

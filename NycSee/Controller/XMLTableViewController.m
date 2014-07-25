@@ -70,12 +70,6 @@
 
 #pragma mark - Navigation
 
-- (void)displayDetailVC:(id)sender
-{
-    self.detailVC = [[ViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:self.detailVC animated:YES];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.detailVC = [[ViewController alloc] initWithNibName:nil bundle:nil];

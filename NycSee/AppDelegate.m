@@ -42,7 +42,6 @@
     self.window.rootViewController = self.tabBarController;
 
     [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
-    NSLog(@"%@", self.tabBarController);
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
