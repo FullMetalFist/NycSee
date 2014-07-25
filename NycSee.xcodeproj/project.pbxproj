@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C029EC51983162200E6CC19 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC41983162200E6CC19 /* Constant.m */; };
+		7C029EC81983168500E6CC19 /* XMLData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC71983168500E6CC19 /* XMLData.m */; };
+		7C3A43A319828A9C007622CE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43A219828A9C007622CE /* SettingsViewController.m */; };
+		7C3A43A619828B79007622CE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43A519828B79007622CE /* DetailViewController.m */; };
+		7C3A43A919828F64007622CE /* subway.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3A43A819828F64007622CE /* subway.json */; };
+		7C3A43AC198293CE007622CE /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43AB198293CE007622CE /* JSONParser.m */; };
+		7C3A43AF1982956F007622CE /* StationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43AE1982956F007622CE /* StationData.m */; };
+		7C3A43B219829609007622CE /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43B119829609007622CE /* Annotation.m */; };
 		7CB545AF1981B2D7004AE7C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545AE1981B2D7004AE7C5 /* Foundation.framework */; };
 		7CB545B11981B2D7004AE7C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */; };
 		7CB545B31981B2D7004AE7C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B21981B2D7004AE7C5 /* UIKit.framework */; };
@@ -21,7 +29,6 @@
 		7CB545D41981B2D7004AE7C5 /* NycSeeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545D31981B2D7004AE7C5 /* NycSeeTests.m */; };
 		7CB545DF1981B32F004AE7C5 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545DE1981B32F004AE7C5 /* MapViewController.m */; };
 		7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */; };
-		7CB545E61981B61E004AE7C5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545E51981B61E004AE7C5 /* ViewController.m */; };
 		7CB545E81981D347004AE7C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E71981D347004AE7C5 /* MapKit.framework */; };
 		7CB545EA1981D34F004AE7C5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E91981D34F004AE7C5 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
@@ -37,6 +44,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C029EC31983162200E6CC19 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		7C029EC41983162200E6CC19 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
+		7C029EC61983168500E6CC19 /* XMLData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLData.h; path = Model/XMLData.h; sourceTree = "<group>"; };
+		7C029EC71983168500E6CC19 /* XMLData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLData.m; path = Model/XMLData.m; sourceTree = "<group>"; };
+		7C3A43A119828A9C007622CE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controller/SettingsViewController.h; sourceTree = "<group>"; };
+		7C3A43A219828A9C007622CE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controller/SettingsViewController.m; sourceTree = "<group>"; };
+		7C3A43A419828B79007622CE /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailViewController.h; path = Controller/DetailViewController.h; sourceTree = "<group>"; };
+		7C3A43A519828B79007622CE /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailViewController.m; path = Controller/DetailViewController.m; sourceTree = "<group>"; };
+		7C3A43A819828F64007622CE /* subway.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = subway.json; path = Model/subway.json; sourceTree = "<group>"; };
+		7C3A43AA198293CE007622CE /* JSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONParser.h; path = Model/JSONParser.h; sourceTree = "<group>"; };
+		7C3A43AB198293CE007622CE /* JSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONParser.m; path = Model/JSONParser.m; sourceTree = "<group>"; };
+		7C3A43AD1982956F007622CE /* StationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StationData.h; path = Model/StationData.h; sourceTree = "<group>"; };
+		7C3A43AE1982956F007622CE /* StationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StationData.m; path = Model/StationData.m; sourceTree = "<group>"; };
+		7C3A43B019829609007622CE /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Model/Annotation.h; sourceTree = "<group>"; };
+		7C3A43B119829609007622CE /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Model/Annotation.m; sourceTree = "<group>"; };
 		7CB545AB1981B2D7004AE7C5 /* NycSee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NycSee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB545AE1981B2D7004AE7C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -57,8 +79,6 @@
 		7CB545DE1981B32F004AE7C5 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = Controller/MapViewController.m; sourceTree = "<group>"; };
 		7CB545E11981B3F9004AE7C5 /* XMLTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLTableViewController.h; path = Controller/XMLTableViewController.h; sourceTree = "<group>"; };
 		7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLTableViewController.m; path = Controller/XMLTableViewController.m; sourceTree = "<group>"; };
-		7CB545E41981B61E004AE7C5 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Controller/ViewController.h; sourceTree = "<group>"; };
-		7CB545E51981B61E004AE7C5 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Controller/ViewController.m; sourceTree = "<group>"; };
 		7CB545E71981D347004AE7C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		7CB545E91981D34F004AE7C5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -89,6 +109,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C3A43A719828EFC007622CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7C029EC61983168500E6CC19 /* XMLData.h */,
+				7C029EC71983168500E6CC19 /* XMLData.m */,
+				7C3A43B019829609007622CE /* Annotation.h */,
+				7C3A43B119829609007622CE /* Annotation.m */,
+				7C3A43AA198293CE007622CE /* JSONParser.h */,
+				7C3A43AB198293CE007622CE /* JSONParser.m */,
+				7C3A43AD1982956F007622CE /* StationData.h */,
+				7C3A43AE1982956F007622CE /* StationData.m */,
+				7C3A43A819828F64007622CE /* subway.json */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		7CB545A21981B2D7004AE7C5 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +160,7 @@
 		7CB545B41981B2D7004AE7C5 /* NycSee */ = {
 			isa = PBXGroup;
 			children = (
+				7C3A43A719828EFC007622CE /* Model */,
 				7CB545E01981B335004AE7C5 /* Controller */,
 				7CB545BD1981B2D7004AE7C5 /* AppDelegate.h */,
 				7CB545BE1981B2D7004AE7C5 /* AppDelegate.m */,
@@ -136,6 +173,8 @@
 		7CB545B51981B2D7004AE7C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7C029EC31983162200E6CC19 /* Constant.h */,
+				7C029EC41983162200E6CC19 /* Constant.m */,
 				7CB545B61981B2D7004AE7C5 /* NycSee-Info.plist */,
 				7CB545B71981B2D7004AE7C5 /* InfoPlist.strings */,
 				7CB545BA1981B2D7004AE7C5 /* main.m */,
@@ -165,12 +204,14 @@
 		7CB545E01981B335004AE7C5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7CB545E41981B61E004AE7C5 /* ViewController.h */,
-				7CB545E51981B61E004AE7C5 /* ViewController.m */,
-				7CB545E11981B3F9004AE7C5 /* XMLTableViewController.h */,
-				7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */,
+				7C3A43A419828B79007622CE /* DetailViewController.h */,
+				7C3A43A519828B79007622CE /* DetailViewController.m */,
 				7CB545DD1981B32F004AE7C5 /* MapViewController.h */,
 				7CB545DE1981B32F004AE7C5 /* MapViewController.m */,
+				7C3A43A119828A9C007622CE /* SettingsViewController.h */,
+				7C3A43A219828A9C007622CE /* SettingsViewController.m */,
+				7CB545E11981B3F9004AE7C5 /* XMLTableViewController.h */,
+				7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -252,6 +293,7 @@
 			files = (
 				7CB545B91981B2D7004AE7C5 /* InfoPlist.strings in Resources */,
 				7CB545C11981B2D7004AE7C5 /* Images.xcassets in Resources */,
+				7C3A43A919828F64007622CE /* subway.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,11 +312,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C3A43AC198293CE007622CE /* JSONParser.m in Sources */,
 				7CB545DF1981B32F004AE7C5 /* MapViewController.m in Sources */,
 				7CB545BF1981B2D7004AE7C5 /* AppDelegate.m in Sources */,
+				7C029EC51983162200E6CC19 /* Constant.m in Sources */,
+				7C3A43B219829609007622CE /* Annotation.m in Sources */,
 				7CB545BB1981B2D7004AE7C5 /* main.m in Sources */,
+				7C3A43AF1982956F007622CE /* StationData.m in Sources */,
+				7C3A43A319828A9C007622CE /* SettingsViewController.m in Sources */,
 				7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */,
-				7CB545E61981B61E004AE7C5 /* ViewController.m in Sources */,
+				7C029EC81983168500E6CC19 /* XMLData.m in Sources */,
+				7C3A43A619828B79007622CE /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +521,7 @@
 				7CB545D91981B2D7004AE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7CB545DA1981B2D7004AE7C5 /* Build configuration list for PBXNativeTarget "NycSeeTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +530,7 @@
 				7CB545DC1981B2D7004AE7C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

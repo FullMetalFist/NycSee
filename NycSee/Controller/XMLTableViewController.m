@@ -20,6 +20,7 @@
     if (self) {
         // Custom initialization
         self.title = @"Outage Data";
+        self.tabBarItem.image = [UIImage imageNamed:@"Outages"];
     }
     return self;
 }
@@ -55,7 +56,7 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return 10;
 }
 
 
@@ -72,7 +73,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.detailVC = [[ViewController alloc] initWithNibName:nil bundle:nil];
+    self.detailVC = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:self.detailVC animated:YES];
 }
 

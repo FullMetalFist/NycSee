@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+
+#import "Annotation.h"
 
 @interface MapViewController : UIViewController
 

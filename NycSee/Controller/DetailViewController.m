@@ -1,18 +1,18 @@
 //
-//  ViewController.m
+//  DetailViewController.m
 //  NycSee
 //
-//  Created by Michael Vilabrera on 7/24/14.
+//  Created by Michael Vilabrera on 7/25/14.
 //  Copyright (c) 2014 Giving Tree. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "DetailViewController.h"
 
-@interface ViewController ()
+@interface DetailViewController ()
 
 @end
 
-@implementation ViewController
+@implementation DetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +28,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    CGRect stationLabelFrame = CGRectMake(0.0f, 0.0f, 100.0f, 24.0f);
+    self.stationLabel = [[UILabel alloc] initWithFrame:stationLabelFrame];
+//    self.stationLabel.text
+    
 }
 
 - (void)didReceiveMemoryWarning

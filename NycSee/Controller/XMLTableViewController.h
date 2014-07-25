@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ViewController.h"
+#import "DetailViewController.h"
 
 @interface XMLTableViewController : UITableViewController
 
-@property (nonatomic, strong) ViewController *detailVC;
+@property (nonatomic, strong) DetailViewController *detailVC;
 
 @end
