@@ -66,7 +66,8 @@
                                                                     longitude:[exitData[@"Longitude"] doubleValue]];
         Annotation *annotation = [[Annotation alloc] initWithCoordinates:singleStation.coordinate
                                                                    title:singleStation.stationName
-                                                                subtitle:singleStation.trains];
+                                                                subtitle:[NSString stringWithFormat:@"%@ %@",singleStation.trains, singleStation.entranceType]
+                                                                exitType:singleStation.entranceType];
         [annotationGroup addObject:annotation];
     }
     [self.mapView addAnnotations:annotationGroup];
@@ -97,7 +98,6 @@
     view.canShowCallout = YES;
     return view;
 }
-
 
 #pragma mark -- CoreLocationLocationManager methods
 

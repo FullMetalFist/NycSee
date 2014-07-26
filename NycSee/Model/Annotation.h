@@ -15,9 +15,11 @@
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *subtitle;
+@property (nonatomic, copy, readonly) NSString *exitType;
 
 - (instancetype) initWithCoordinates:(CLLocationCoordinate2D)coord
                                title:(NSString *)title
-                            subtitle:(NSString *)subtitle;
+                            subtitle:(NSString *)subtitle
+                            exitType:(NSString *)exitType;
 
 @end

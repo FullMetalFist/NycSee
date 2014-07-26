@@ -13,5 +13,6 @@
 @interface XMLTableViewController : UITableViewController
 
 @property (nonatomic, strong) DetailViewController *detailVC;
+@property (nonatomic, strong) NSMutableArray *allDataFromXML;
 
 @end

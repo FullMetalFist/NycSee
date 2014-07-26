@@ -8,7 +8,14 @@
 
 #import "XMLTableViewController.h"
 
-@interface XMLTableViewController ()
+#import "Constant.h"
+#import "XMLData.h"
+
+@interface XMLTableViewController () <NSXMLParserDelegate>
+
+@property (nonatomic, strong) NSMutableArray *outages;
+@property (nonatomic, strong) NSMutableString *currentElement;
+@property (nonatomic, strong) XMLData *xmlData;
 
 @end
 
@@ -30,11 +37,14 @@
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"outage"];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSURL *url = [[NSURL alloc] initWithString:XML_DATA_URL];
+    self.outages = [NSMutableArray array];
+    self.allDataFromXML = [NSMutableArray array];
+    self.xmlData = [[XMLData alloc] init];
+    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+    [parser setDelegate:self];
+    [parser parse];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,16 +57,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+    return [self.allDataFromXML count];
 }
 
 
@@ -65,7 +73,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"outage" forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    XMLData *theData = self.allDataFromXML[indexPath.row];
+    cell.textLabel.text = theData.station;
     return cell;
 }
 
@@ -74,54 +83,67 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.detailVC = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
+    XMLData *theData = self.allDataFromXML[indexPath.row];
+    self.detailVC.xmlData = theData;
     [self.navigationController pushViewController:self.detailVC animated:YES];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark -- XML Parser methods
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    if ([elementName isEqualToString:@"outage"]) {
+        self.xmlData = [[XMLData alloc] init];
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
+    if (self.currentElement == nil) {
+        self.currentElement = [NSMutableString string];
+    }
+    self.currentElement = [NSMutableString stringWithFormat:@"%@", string];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+    if ([elementName isEqualToString:@"outage"]) {
+        [self.allDataFromXML addObject:self.xmlData];
+        return;
+    }
+    else if ([elementName isEqualToString:@"NYCOutages"]) {
+        return;
+    } else {
+        [self parseDataWithElementName:elementName];
+    }
 }
-*/
 
-/*
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
- }
- */
+- (void) parseDataWithElementName:(NSString *)elementName
+{
+    if ([elementName isEqualToString:@"station"]) {
+        self.xmlData.station = self.currentElement;
+    }
+    else if ([elementName isEqualToString:@"borough"]) {
+        self.xmlData.borough = self.currentElement;
+    }
+    else if ([elementName isEqualToString:@"trainno"]) {
+        self.xmlData.trainno = self.currentElement;
+    }
+    else if ([elementName isEqualToString:@"equipmenttype"]) {
+        if ([self.currentElement isEqualToString:@"EL"]) {
+            self.xmlData.equipment = @"ELEVATOR";
+        } else if ([self.currentElement isEqualToString:@"ES"]) {
+            self.xmlData.equipment = @"ESCALATOR";
+        } else {
+            self.xmlData.equipment = self.currentElement;
+        }
+    } else if ([elementName isEqualToString:@"serving"]) {
+        self.xmlData.serving = self.currentElement;
+    } else if ([elementName isEqualToString:@"outagedate"]) {
+        self.xmlData.outageDate = self.currentElement;
+    } else if ([elementName isEqualToString:@"estimatedreturntoservice"]) {
+        self.xmlData.estimatedReturnToService = self.currentElement;
+    }
+}
 
 @end

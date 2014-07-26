@@ -16,12 +16,14 @@
 - (instancetype) initWithCoordinates:(CLLocationCoordinate2D)coord
                                title:(NSString *)title
                             subtitle:(NSString *)subtitle
+                            exitType:(NSString *)exitType
 {
     self = [super init];
     if (self) {
         _coordinate = coord;
         _title = title;
         _subtitle = subtitle;
+        _exitType = exitType;
     }
     return self;
 }
