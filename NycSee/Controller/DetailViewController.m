@@ -30,8 +30,10 @@
     // Do any additional setup after loading the view.
     CGRect stationLabelFrame = CGRectMake(0.0f, 0.0f, 100.0f, 24.0f);
     self.stationLabel = [[UILabel alloc] initWithFrame:stationLabelFrame];
-//    self.stationLabel.text
-    
+    self.stationLabel.text = @"Station: ";
+    self.stationLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+    self.stationLabel.center = self.view.center;
+    [self.view addSubview:self.stationLabel];
 }
 
 - (void)didReceiveMemoryWarning
