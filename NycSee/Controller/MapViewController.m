@@ -48,29 +48,35 @@
 {
     NSArray *allTheData = [JSONParser locations];
     NSMutableArray *annotationGroup = [NSMutableArray array];
-    for (NSDictionary *exitData in allTheData) {
-        StationData *singleStation = [[StationData alloc] initWithStationName:exitData[@"Station_Name"]
-                                                                      route01:exitData[@"Route_1"]
-                                                                      route02:exitData[@"Route_2"]
-                                                                      route03:exitData[@"Route_3"]
-                                                                      route04:exitData[@"Route_4"]
-                                                                      route05:exitData[@"Route_5"]
-                                                                      route06:exitData[@"Route_6"]
-                                                                      route07:exitData[@"Route_7"]
-                                                                      route08:exitData[@"Route_8"]
-                                                                      route09:exitData[@"Route_9"]
-                                                                      route10:exitData[@"Route_10"]
-                                                                      route11:exitData[@"Route_11"]
-                                                                 entranceType:exitData[@"Entrance_Type"]
-                                                                     latitude:[exitData[@"Latitude"] doubleValue]
-                                                                    longitude:[exitData[@"Longitude"] doubleValue]];
-        Annotation *annotation = [[Annotation alloc] initWithCoordinates:singleStation.coordinate
-                                                                   title:singleStation.stationName
-                                                                subtitle:[NSString stringWithFormat:@"%@ %@",singleStation.trains, singleStation.entranceType]
-                                                                exitType:singleStation.entranceType];
-        [annotationGroup addObject:annotation];
-    }
-    [self.mapView addAnnotations:annotationGroup];
+    
+    dispatch_queue_t innerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    
+    dispatch_async(innerQueue, ^{
+        for (NSDictionary *exitData in allTheData) {
+            StationData *singleStation = [[StationData alloc] initWithStationName:exitData[@"Station_Name"]
+                                                                          route01:exitData[@"Route_1"]
+                                                                          route02:exitData[@"Route_2"]
+                                                                          route03:exitData[@"Route_3"]
+                                                                          route04:exitData[@"Route_4"]
+                                                                          route05:exitData[@"Route_5"]
+                                                                          route06:exitData[@"Route_6"]
+                                                                          route07:exitData[@"Route_7"]
+                                                                          route08:exitData[@"Route_8"]
+                                                                          route09:exitData[@"Route_9"]
+                                                                          route10:exitData[@"Route_10"]
+                                                                          route11:exitData[@"Route_11"]
+                                                                     entranceType:exitData[@"Entrance_Type"]
+                                                                         latitude:[exitData[@"Latitude"] doubleValue]
+                                                                        longitude:[exitData[@"Longitude"] doubleValue]];
+            Annotation *annotation = [[Annotation alloc] initWithCoordinates:singleStation.coordinate
+                                                                       title:singleStation.stationName
+                                                                    subtitle:[NSString stringWithFormat:@"%@ %@",singleStation.trains, singleStation.entranceType]
+                                                                    exitType:singleStation.entranceType];
+            [annotationGroup addObject:annotation];
+        }
+    });
+    
+        [self.mapView addAnnotations:annotationGroup];
 }
 
 #pragma mark -- mapView methods
@@ -78,7 +84,7 @@
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 1000.0, 1000.0);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
     
     [self.mapView setRegion:region animated:YES];
 }
