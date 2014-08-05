@@ -41,17 +41,16 @@
     self.mapView.showsUserLocation = YES;
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
-    [self consolidateData];
+    //[self consolidateData];
 }
 
 - (void)consolidateData
 {
     NSArray *allTheData = [JSONParser locations];
     NSMutableArray *annotationGroup = [NSMutableArray array];
+    NSOperationQueue *aQueue = [[NSOperationQueue alloc] init];
     
-    dispatch_queue_t innerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    
-    dispatch_async(innerQueue, ^{
+    [aQueue addOperationWithBlock:^{
         for (NSDictionary *exitData in allTheData) {
             StationData *singleStation = [[StationData alloc] initWithStationName:exitData[@"Station_Name"]
                                                                           route01:exitData[@"Route_1"]
@@ -74,9 +73,10 @@
                                                                     exitType:singleStation.entranceType];
             [annotationGroup addObject:annotation];
         }
-    });
-    
-        [self.mapView addAnnotations:annotationGroup];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.mapView addAnnotations:annotationGroup];
+        }];
+    }];
 }
 
 #pragma mark -- mapView methods
@@ -84,9 +84,10 @@
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 100.0, 100.0);
     
     [self.mapView setRegion:region animated:YES];
+    [self consolidateData];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
