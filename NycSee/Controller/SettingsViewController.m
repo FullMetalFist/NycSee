@@ -11,7 +11,7 @@
 @interface SettingsViewController ()
 
 @end
-#warning settings page inactive
+//#warning settings page inactive
 @implementation SettingsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

@@ -34,12 +34,18 @@ NSString *const kOutageDateLabelVertical = @"V:|-[_outageDateLabel]-|";
 NSString *const kExpectedReturnToServiceLabelHorizontal = @"H:|-[_expectedReturnToServiceLabel]-|";
 NSString *const kExpectedReturnToServiceLabelVertical = @"V:|[_expectedReturnToServiceLabel]-100-|";
 
+double const kXCoordinate = 20.0f;
+double const kFrameWidth = 280.0f;
+double const kFrameHeightLesser = 20.0f;
+double const kFrameHeightGreater = 40.0f;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
         self.title = @"Outage Detail";
+        self.tabBarItem.image = [UIImage imageNamed:@"Outages"];
     }
     return self;
 }
@@ -54,13 +60,13 @@ NSString *const kExpectedReturnToServiceLabelVertical = @"V:|[_expectedReturnToS
     self.innerView = [[UIView alloc] initWithFrame:innerViewFrame];
     self.scrollView.delegate = self;
     
-    CGRect stationLabelFrame = CGRectMake(20.0f, 10.0f, 280.0f, 40.0f);
-    CGRect boroughLabelFrame = CGRectMake(20.0f, 40.0f, 280.0f, 20.0f);
-    CGRect trainLabelFrame = CGRectMake(20.0f, 70.0f, 280.0f, 20.0f);
-    CGRect typeLabelFrame = CGRectMake(20.0f, 100.0f, 280.0f, 20.0f);
-    CGRect servingLabelFrame = CGRectMake(20.0f, 120.0f, 280.0f, 40.0f);
-    CGRect outageDateLabelFrame = CGRectMake(20.0f, 150.0f, 280.0f, 20.0f);
-    CGRect expectedReturnToServiceLabelFrame = CGRectMake(20.0f, 180.0f, 280.0f, 20.0f);
+    CGRect stationLabelFrame = CGRectMake(kXCoordinate, 10.0f, kFrameWidth, kFrameHeightGreater);
+    CGRect boroughLabelFrame = CGRectMake(kXCoordinate, 40.0f, kFrameWidth, kFrameHeightLesser);
+    CGRect trainLabelFrame = CGRectMake(kXCoordinate, 70.0f, kFrameWidth, kFrameHeightLesser);
+    CGRect typeLabelFrame = CGRectMake(kXCoordinate, 100.0f, kFrameWidth, kFrameHeightLesser);
+    CGRect servingLabelFrame = CGRectMake(kXCoordinate, 120.0f, kFrameWidth, kFrameHeightGreater);
+    CGRect outageDateLabelFrame = CGRectMake(kXCoordinate, 150.0f, kFrameWidth, kFrameHeightLesser);
+    CGRect expectedReturnToServiceLabelFrame = CGRectMake(kXCoordinate, 180.0f, kFrameWidth, kFrameHeightLesser);
     
     self.stationLabel = [[UILabel alloc] initWithFrame:stationLabelFrame];
     self.boroughLabel = [[UILabel alloc] initWithFrame:boroughLabelFrame];
@@ -69,14 +75,6 @@ NSString *const kExpectedReturnToServiceLabelVertical = @"V:|[_expectedReturnToS
     self.servingLabel = [[UILabel alloc] initWithFrame:servingLabelFrame];
     self.outageDateLabel = [[UILabel alloc] initWithFrame:outageDateLabelFrame];
     self.expectedReturnToServiceLabel = [[UILabel alloc] initWithFrame:expectedReturnToServiceLabelFrame];
-    
-//    self.stationLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.boroughLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.trainLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.typeLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.servingLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.outageDateLabel.font = [UIFont systemFontOfSize:18.0f];
-//    self.expectedReturnToServiceLabel.font = [UIFont systemFontOfSize:18.0f];
     
     self.stationLabel.text = self.xmlData.station;
     self.boroughLabel.text = self.xmlData.borough;

@@ -85,7 +85,7 @@
     self.detailVC = [[DetailViewController alloc] initWithNibName:nil bundle:nil];
     XMLData *theData = self.allDataFromXML[indexPath.row];
     self.detailVC.xmlData = theData;
-    [self.navigationController pushViewController:self.detailVC animated:YES];
+    [self.navigationController pushViewController:self.detailVC animated:NO];
 }
 
 #pragma mark -- XML Parser methods
