@@ -36,18 +36,27 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // iOS 8 necessary methods
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager startUpdatingLocation];
+    
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
-    self.mapView.showsUserLocation = YES;
+    //self.mapView.showsUserLocation = YES; // moved to locationManager:didChangeAuthorizationStatus method
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
-    //[self consolidateData];
 }
 
 - (void)consolidateData
 {
     NSArray *allTheData = [JSONParser locations];
     NSMutableArray *annotationGroup = [NSMutableArray array];
+    
+    // GCD (dispatch_async) should be implemented
+    // less overhead but can't be cancelled.
     NSOperationQueue *aQueue = [[NSOperationQueue alloc] init];
     
     [aQueue addOperationWithBlock:^{
@@ -67,6 +76,8 @@
                        entranceType:exitData[@"Entrance_Type"]
                            latitude:[exitData[@"Latitude"] doubleValue]
                           longitude:[exitData[@"Longitude"] doubleValue]];
+            // record lat-lng for line overlay
+            // separate route and display overlay on the map
             Annotation *annotation = [[Annotation alloc] initWithCoordinates:singleStation.coordinate
                                                                        title:singleStation.stationName
                                                                     subtitle:[NSString stringWithFormat:@"%@ %@",singleStation.trains, singleStation.entranceType]
@@ -106,13 +117,23 @@
     return view;
 }
 
-
+/*
+ MKOverlayRenderer
+ */
 
 #pragma mark -- CoreLocationLocationManager methods
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager startUpdatingLocation];
     self.location = locations.lastObject;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        self.mapView.showsUserLocation = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning

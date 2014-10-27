@@ -26,7 +26,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.title = @"Outage Data";
+        self.title = @"Outage List";
         self.tabBarItem.image = [UIImage imageNamed:@"Outages"];
     }
     return self;
@@ -37,7 +37,7 @@
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"outage"];
     
-    NSURL *url = [[NSURL alloc] initWithString:XML_DATA_URL];
+    NSURL *url = [[NSURL alloc] initWithString:XML_DATA_URL];   // nsurlsession
     self.outages = [NSMutableArray array];
     self.allDataFromXML = [NSMutableArray array];
     self.xmlData = [[XMLData alloc] init];

@@ -42,8 +42,8 @@
     self.tabBarController = [[UITabBarController alloc] init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
     self.navController.title = @"Outages";
-    self.navController.tabBarItem.image = [UIImage imageNamed:@"Outages"];
-    self.mapVC.tabBarItem.image = [UIImage imageNamed:@"Map"];
+    self.navController.tabBarItem.image = [UIImage imageNamed:@"outage"];
+    self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
     self.window.rootViewController = self.tabBarController;
     
     [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
