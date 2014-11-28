@@ -35,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Outage List";
+
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"outage"];
     
     NSURL *url = [[NSURL alloc] initWithString:XML_DATA_URL];   // nsurlsession

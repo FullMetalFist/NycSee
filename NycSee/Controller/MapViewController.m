@@ -13,9 +13,9 @@
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
+// locationManager property moved to .h file
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) CLLocation *location;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -40,14 +40,30 @@
     // iOS 8 necessary methods
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    [self.locationManager requestWhenInUseAuthorization];
-    [self.locationManager startUpdatingLocation];
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+        [self.locationManager startUpdatingLocation];
+    }
+    //[self.locationManager requestWhenInUseAuthorization];
+    
     
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
     //self.mapView.showsUserLocation = YES; // moved to locationManager:didChangeAuthorizationStatus method
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // when view appears after loading...
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager = nil;
 }
 
 - (void)consolidateData

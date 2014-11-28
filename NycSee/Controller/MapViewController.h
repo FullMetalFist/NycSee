@@ -15,4 +15,6 @@
 
 @interface MapViewController : UIViewController
 
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
 @end

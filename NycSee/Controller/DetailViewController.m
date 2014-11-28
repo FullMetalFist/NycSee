@@ -54,6 +54,8 @@ double const kFrameHeightGreater = 40.0f;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"Outage Detail";
+    
     CGRect innerViewFrame = CGRectMake(10.0f, 10.0f, 240, 400000);
     NSDictionary *viewsDictionary;
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
