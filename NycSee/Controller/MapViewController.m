@@ -11,6 +11,8 @@
 #import "JSONParser.h"
 #import "StationData.h"
 
+#import "AnnotationView.h"
+
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 // locationManager property moved to .h file
@@ -58,6 +60,7 @@
 {
     // when view appears after loading...
     [self.locationManager startUpdatingLocation];
+    [self consolidateData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -114,7 +117,7 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
     
     [self.mapView setRegion:region animated:NO];
-    [self consolidateData];
+//    [self consolidateData];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -122,14 +125,23 @@
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
-    MKAnnotationView *view = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+//    MKAnnotationView *view = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+//    if (view == nil) {
+//        view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
+//    }
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    view.leftCalloutAccessoryView = imageView;
+//    view.enabled = YES;
+//    view.canShowCallout = YES;
+    
+    static NSString *identifier = @"pin";
+    
+    AnnotationView *view = (AnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
     if (view == nil) {
-        view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
+        view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
     }
-    UIImageView *imageView = [[UIImageView alloc] init];
-    view.leftCalloutAccessoryView = imageView;
-    view.enabled = YES;
-    view.canShowCallout = YES;
+    
     return view;
 }
 

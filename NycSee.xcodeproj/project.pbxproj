@@ -31,6 +31,7 @@
 		7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */; };
 		7CB545E81981D347004AE7C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E71981D347004AE7C5 /* MapKit.framework */; };
 		7CB545EA1981D34F004AE7C5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E91981D34F004AE7C5 /* CoreLocation.framework */; };
+		7CFCF3AE1A2CDA7C009CD7A6 /* AnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CFCF3AD1A2CDA7C009CD7A6 /* AnnotationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLTableViewController.m; path = Controller/XMLTableViewController.m; sourceTree = "<group>"; };
 		7CB545E71981D347004AE7C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		7CB545E91981D34F004AE7C5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7CFCF3AC1A2CDA7C009CD7A6 /* AnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnotationView.h; path = View/AnnotationView.h; sourceTree = "<group>"; };
+		7CFCF3AD1A2CDA7C009CD7A6 /* AnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnotationView.m; path = View/AnnotationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,7 @@
 				7CB545E01981B335004AE7C5 /* Controller */,
 				7CB545BD1981B2D7004AE7C5 /* AppDelegate.h */,
 				7CB545BE1981B2D7004AE7C5 /* AppDelegate.m */,
+				7CFCF3A81A2CD8AE009CD7A6 /* View */,
 				7CB545C01981B2D7004AE7C5 /* Images.xcassets */,
 				7CB545B51981B2D7004AE7C5 /* Supporting Files */,
 			);
@@ -214,6 +218,15 @@
 				7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		7CFCF3A81A2CD8AE009CD7A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7CFCF3AC1A2CDA7C009CD7A6 /* AnnotationView.h */,
+				7CFCF3AD1A2CDA7C009CD7A6 /* AnnotationView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C3A43AC198293CE007622CE /* JSONParser.m in Sources */,
+				7CFCF3AE1A2CDA7C009CD7A6 /* AnnotationView.m in Sources */,
 				7CB545DF1981B32F004AE7C5 /* MapViewController.m in Sources */,
 				7CB545BF1981B2D7004AE7C5 /* AppDelegate.m in Sources */,
 				7C029EC51983162200E6CC19 /* Constant.m in Sources */,
