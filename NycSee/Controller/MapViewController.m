@@ -18,7 +18,7 @@
 // locationManager property moved to .h file
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) CLLocation *location;
-
+@property (nonatomic) BOOL didSetRegion;
 @end
 
 @implementation MapViewController
@@ -113,10 +113,13 @@
 
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
-    
-    [self.mapView setRegion:region animated:NO];
+    if (!self.didSetRegion) {
+        CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+        
+        [self.mapView setRegion:region animated:NO];
+        self.didSetRegion = YES;
+    }
 //    [self consolidateData];
 }
 
@@ -134,12 +137,35 @@
 //    view.enabled = YES;
 //    view.canShowCallout = YES;
     
-    static NSString *identifier = @"pin";
+    // set pin types:
+    // elevator -   green
+    // escalator-   orange
+    // door     -   blue
+    // easement -   purple
+    // stairs   -   red
+    static NSString *identifierRed = @"pinRed";
+    static NSString *identifierGreen = @"pinGreen";
+    static NSString *identifierOrange = @"pinOrange";
+    static NSString *identifierBlue = @"pinBlue";
+    static NSString *identifierPurple = @"pinPurple";
     
-    AnnotationView *view = (AnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-    
+    AnnotationView *view = (AnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifierRed];
     if (view == nil) {
-        view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        if (view.color == [UIColor redColor]) {
+            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierRed];
+        }
+        else if (view.color == [UIColor greenColor]) {
+            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierGreen];
+        }
+        else if (view.color == [UIColor orangeColor]) {
+            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierOrange];
+        }
+        else if (view.color == [UIColor blueColor]) {
+            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierBlue];
+        }
+        else {
+            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierPurple];
+        }
     }
     
     return view;

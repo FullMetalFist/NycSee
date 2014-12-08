@@ -10,4 +10,6 @@
 
 @interface AnnotationView : MKAnnotationView
 
+@property (strong, nonatomic) UIColor *color;
+
 @end
