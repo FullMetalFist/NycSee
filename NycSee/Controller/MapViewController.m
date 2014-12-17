@@ -113,13 +113,17 @@
 
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if (!self.didSetRegion) {
-        CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
-        
-        [self.mapView setRegion:region animated:NO];
-        self.didSetRegion = YES;
-    }
+//    if (!self.didSetRegion) {
+//        CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+//        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+//        
+//        [self.mapView setRegion:region animated:NO];
+//        self.didSetRegion = YES;
+//    }
+    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+    
+    [self.mapView setRegion:region animated:NO];
 //    [self consolidateData];
 }
 
@@ -143,32 +147,36 @@
     // door     -   blue
     // easement -   purple
     // stairs   -   red
+    
     static NSString *identifierRed = @"pinRed";
     static NSString *identifierGreen = @"pinGreen";
     static NSString *identifierOrange = @"pinOrange";
     static NSString *identifierBlue = @"pinBlue";
     static NSString *identifierPurple = @"pinPurple";
     
-    AnnotationView *view = (AnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifierRed];
-    if (view == nil) {
-        if (view.color == [UIColor redColor]) {
-            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierRed];
+    AnnotationView *annView;
+    if (annView) {
+        
+        if (annView.color == [UIColor greenColor]) {
+            annView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierGreen];
         }
-        else if (view.color == [UIColor greenColor]) {
-            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierGreen];
+        else if (annView.color == [UIColor orangeColor]) {
+            annView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierOrange];
         }
-        else if (view.color == [UIColor orangeColor]) {
-            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierOrange];
+        else if (annView.color == [UIColor blueColor]) {
+            annView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierBlue];
         }
-        else if (view.color == [UIColor blueColor]) {
-            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierBlue];
+        else if (annView.color == [UIColor purpleColor]) {
+            annView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierPurple];
         }
         else {
-            view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierPurple];
+            annView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifierRed];
         }
+    } else {
+        annView = (AnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:identifierRed];
     }
     
-    return view;
+    return annView;
 }
 
 /*
