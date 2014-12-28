@@ -38,6 +38,7 @@
 
     self.mapVC = [[MapViewController alloc] initWithNibName:nil bundle:nil];
     self.xmlVC = [[XMLTableViewController alloc] initWithNibName:nil bundle:nil];
+    self.settingsVC = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     //self.settingsVC = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
@@ -46,9 +47,9 @@
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
     self.window.rootViewController = self.tabBarController;
     
-    [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
+//    [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
 
-    //[self.tabBarController setViewControllers:@[self.mapVC, self.navController, self.settingsVC]];
+    [self.tabBarController setViewControllers:@[self.mapVC, self.navController, self.settingsVC]];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

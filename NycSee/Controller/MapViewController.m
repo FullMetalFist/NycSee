@@ -19,6 +19,9 @@
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) CLLocation *location;
 
+// zoom to user location button
+@property (strong, nonatomic) UIButton *userLocationButton;
+
 @end
 
 @implementation MapViewController
@@ -54,14 +57,26 @@
     //self.mapView.showsUserLocation = YES; // moved to locationManager:didChangeAuthorizationStatus method
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
+    
+    CGRect buttonFrame = CGRectMake(110.0f, 450.0f, 100.0f, 40.0f);
+    self.userLocationButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    [self.userLocationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.userLocationButton setTitle:@"Find Me" forState:UIControlStateNormal];
+    [self.userLocationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
+    [self.userLocationButton addTarget:self action:@selector(buttonIsPressed:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.userLocationButton];
+    [self consolidateData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     // when view appears after loading...
     [self.locationManager startUpdatingLocation];
-    [self consolidateData];
+    /* following method within viewWillAppear proved counter-productive */
+//    [self consolidateData];
 }
+
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -168,6 +183,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) buttonIsPressed:(UIButton *)sender {
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
 @end
