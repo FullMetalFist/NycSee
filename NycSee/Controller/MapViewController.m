@@ -23,7 +23,7 @@
 @property (nonatomic) BOOL didSetRegion;
 
 // zoom to user location button
-@property (strong, nonatomic) UIButton *userLocationButton;
+@property (strong, nonatomic) UIButton *findMeButton;
 
 @end
 
@@ -40,6 +40,8 @@
     return self;
 }
 
+#pragma mark -- viewDidLoad
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,9 +53,7 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
         [self.locationManager startUpdatingLocation];
-    }
-    //[self.locationManager requestWhenInUseAuthorization];
-    
+    }    
     
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
@@ -61,13 +61,22 @@
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
     
-    CGRect buttonFrame = CGRectMake(110.0f, 450.0f, 100.0f, 40.0f);
-    self.userLocationButton = [[UIButton alloc] initWithFrame:buttonFrame];
-    [self.userLocationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.userLocationButton setTitle:@"Find Me" forState:UIControlStateNormal];
-    [self.userLocationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
-    [self.userLocationButton addTarget:self action:@selector(buttonIsPressed:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:self.userLocationButton];
+//    CGRect buttonFrame = CGRectMake(110.0f, 450.0f, 100.0f, 40.0f);
+    
+//    self.findMeButton = [[UIButton alloc] initWithFrame:buttonFrame];
+    self.findMeButton = [[UIButton alloc] init];
+    [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.findMeButton setTitle:@"Find Me" forState:UIControlStateNormal];
+    [self.findMeButton setTitle:@"Searching" forState:UIControlStateHighlighted];
+    [self.findMeButton addTarget:self action:@selector(buttonIsPressed:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.findMeButton];
+    
+    self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton);
+    NSDictionary *metrics = @{@"findMeButtonWidth":@100,@"findMeButtonHeight":@40};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(110)-[_findMeButton(findMeButtonWidth)]" options:0 metrics: metrics views:viewsDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(findMeButtonHeight)]-(50)-|" options:0 metrics: metrics views:viewsDictionary]];
+    
     [self consolidateData];
 }
 
@@ -79,13 +88,23 @@
 //    [self consolidateData];
 }
 
-
+- (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    if (size.width > size.height) {
+        // elements for landscape
+    }
+    else {
+        // elements for portrait
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.locationManager stopUpdatingLocation];
     self.locationManager = nil;
 }
+
+#pragma mark -- JSON Parsing method
 
 - (void)consolidateData
 {
@@ -191,9 +210,11 @@
 }
 
 - (void) buttonIsPressed:(UIButton *)sender {
-    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
-    [self.mapView setRegion:region animated:YES];
+//    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+//    [self.mapView setRegion:region animated:YES];
+    
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
 @end
