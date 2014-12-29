@@ -19,6 +19,9 @@
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) CLLocation *location;
 
+// prevent snapping to user location
+@property (nonatomic) BOOL didSetRegion;
+
 // zoom to user location button
 @property (strong, nonatomic) UIButton *userLocationButton;
 
@@ -128,10 +131,20 @@
 
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+    // place boolean didSetRegion here (?)
+    if (!self.didSetRegion) {
+        CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+        
+        [self.mapView setRegion:region animated:NO];
+        self.didSetRegion = YES;
+    }
     
-    [self.mapView setRegion:region animated:NO];
+    /* below commands are excess */
+//    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+//    
+//    [self.mapView setRegion:region animated:NO];
 //    [self consolidateData];
 }
 
@@ -140,14 +153,6 @@
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
-//    MKAnnotationView *view = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
-//    if (view == nil) {
-//        view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
-//    }
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    view.leftCalloutAccessoryView = imageView;
-//    view.enabled = YES;
-//    view.canShowCallout = YES;
     
     static NSString *identifier = @"pin";
     
@@ -186,7 +191,9 @@
 }
 
 - (void) buttonIsPressed:(UIButton *)sender {
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+    [self.mapView setRegion:region animated:YES];
 }
 
 @end
