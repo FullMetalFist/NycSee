@@ -109,6 +109,9 @@ double const kFrameHeightGreater = 40.0f;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_innerView]|" options:0 metrics: 0 views:viewsDictionary]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_innerView]|" options:0 metrics: 0 views:viewsDictionary]];
+    
+    self.view.backgroundColor = [UIColor whiteColor];           // props @orta
+
 }
 
 - (void)didReceiveMemoryWarning
