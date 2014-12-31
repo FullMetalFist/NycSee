@@ -10,9 +10,38 @@
 
 @interface SettingsViewController ()
 
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIView *innerView;
+
+@property (strong, nonatomic) UILabel *stairsLabel;
+@property (strong, nonatomic) UILabel *easementLabel;
+@property (strong, nonatomic) UILabel *doorLabel;
+@property (strong, nonatomic) UILabel *elevatorLabel;
+@property (strong, nonatomic) UILabel *escalatorLabel;
+
+@property (strong, nonatomic) UILabel *saveOutageLabel;
+
+@property (strong, nonatomic) UISwitch *stairsSwitch;
+@property (strong, nonatomic) UISwitch *easementSwitch;
+@property (strong, nonatomic) UISwitch *doorSwitch;
+@property (strong, nonatomic) UISwitch *elevatorSwitch;
+@property (strong, nonatomic) UISwitch *escalatorSwitch;
+
+@property (strong, nonatomic) UISwitch *saveOutageSwitch;
+
 @end
-//#warning settings page inactive
+
 @implementation SettingsViewController
+
+#pragma mark -- Visual Format Language Constants
+
+NSString *const kStationLabelHorizontal = @"H:|-[_stationLabel]-|";
+NSString *const kStationLabelVertical = @"V:|-[_stationLabel]|";
+
+double const kXCoordinate = 20.0f;
+double const kFrameWidth = 280.0f;
+double const kFrameHeightLesser = 20.0f;
+double const kFrameHeightGreater = 40.0f;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

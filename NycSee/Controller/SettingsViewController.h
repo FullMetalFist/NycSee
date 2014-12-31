@@ -10,4 +10,12 @@
 
 @interface SettingsViewController : UIViewController
 
+@property (nonatomic) BOOL stairsChoice;            // YES indicates they will be shown
+@property (nonatomic) BOOL easementChoice;          // NO indicates they will not be shown
+@property (nonatomic) BOOL doorChoice;
+@property (nonatomic) BOOL elevatorChoice;
+@property (nonatomic) BOOL escalatorChoice;
+
+@property (nonatomic) BOOL saveOutageChoice;        // activate CoreData
+
 @end

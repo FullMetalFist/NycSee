@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7C029EC51983162200E6CC19 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC41983162200E6CC19 /* Constant.m */; };
 		7C029EC81983168500E6CC19 /* XMLData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC71983168500E6CC19 /* XMLData.m */; };
+		7C1974A21A534451007A7490 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1974A11A534451007A7490 /* CoreData.framework */; };
 		7C3A43A319828A9C007622CE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43A219828A9C007622CE /* SettingsViewController.m */; };
 		7C3A43A619828B79007622CE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43A519828B79007622CE /* DetailViewController.m */; };
 		7C3A43A919828F64007622CE /* subway.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C3A43A819828F64007622CE /* subway.json */; };
@@ -49,6 +50,7 @@
 		7C029EC41983162200E6CC19 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		7C029EC61983168500E6CC19 /* XMLData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLData.h; path = Model/XMLData.h; sourceTree = "<group>"; };
 		7C029EC71983168500E6CC19 /* XMLData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLData.m; path = Model/XMLData.m; sourceTree = "<group>"; };
+		7C1974A11A534451007A7490 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		7C3A43A119828A9C007622CE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = Controller/SettingsViewController.h; sourceTree = "<group>"; };
 		7C3A43A219828A9C007622CE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = Controller/SettingsViewController.m; sourceTree = "<group>"; };
 		7C3A43A419828B79007622CE /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailViewController.h; path = Controller/DetailViewController.h; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C1974A21A534451007A7490 /* CoreData.framework in Frameworks */,
 				7CB545EA1981D34F004AE7C5 /* CoreLocation.framework in Frameworks */,
 				7CB545E81981D347004AE7C5 /* MapKit.framework in Frameworks */,
 				7CB545B11981B2D7004AE7C5 /* CoreGraphics.framework in Frameworks */,
@@ -150,6 +153,7 @@
 		7CB545AD1981B2D7004AE7C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C1974A11A534451007A7490 /* CoreData.framework */,
 				7CB545E91981D34F004AE7C5 /* CoreLocation.framework */,
 				7CB545E71981D347004AE7C5 /* MapKit.framework */,
 				7CB545AE1981B2D7004AE7C5 /* Foundation.framework */,
