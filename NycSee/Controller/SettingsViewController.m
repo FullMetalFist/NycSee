@@ -35,13 +35,13 @@
 
 #pragma mark -- Visual Format Language Constants
 
-NSString *const kStationLabelHorizontal = @"H:|-[_stationLabel]-|";
-NSString *const kStationLabelVertical = @"V:|-[_stationLabel]|";
+//NSString *const kStationLabelHorizontal = @"H:|-[_stairsLabel]-|";
+//NSString *const kStationLabelVertical = @"V:|-[_stairsLabel]|";
 
-double const kXCoordinate = 20.0f;
-double const kFrameWidth = 280.0f;
-double const kFrameHeightLesser = 20.0f;
-double const kFrameHeightGreater = 40.0f;
+//double const kXCoordinate = 20.0f;
+//double const kFrameWidth = 280.0f;
+//double const kFrameHeightLesser = 20.0f;
+//double const kFrameHeightGreater = 40.0f;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,6 +54,7 @@ double const kFrameHeightGreater = 40.0f;
     return self;
 }
 
+//TODO: set UIViews to their place in this view controller
 - (void)viewDidLoad
 {
     [super viewDidLoad];

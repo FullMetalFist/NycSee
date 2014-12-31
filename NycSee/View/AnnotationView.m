@@ -9,6 +9,11 @@
 #import "AnnotationView.h"
 #import "Annotation.h"
 
+/*
+ breaking this class up into categories-
+    will it help? this dev sure hopes so!
+ */
+
 @implementation AnnotationView
 
 - (instancetype) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
@@ -23,7 +28,7 @@
         self.image = [UIImage imageNamed:@"blue.png"];
     } else if ([exitAnnotation.exitType isEqualToString:@"Easement"]) {
         self.image = [UIImage imageNamed:@"purple.png"];
-    } else {
+    } else if ([exitAnnotation.exitType isEqualToString:@"Stair"]){
         self.image = [UIImage imageNamed:@"red.png"];
     }
     

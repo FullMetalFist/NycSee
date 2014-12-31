@@ -22,8 +22,16 @@
 // prevent snapping to user location
 @property (nonatomic) BOOL didSetRegion;
 
-// zoom to user location button
+// zoom to user location button & nearest station button
 @property (strong, nonatomic) UIButton *findMeButton;
+@property (strong, nonatomic) UIButton *nearestStationButton;
+
+// place annotations in custom array for refresh purposes
+@property (strong, nonatomic) NSMutableArray *annotationGroup;
+
+// razor-thin views to hold button in place
+@property (strong, nonatomic) UIView *leftSideView;
+@property (strong, nonatomic) UIView *rightSideView;
 
 @end
 
@@ -61,21 +69,30 @@
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
     
-//    CGRect buttonFrame = CGRectMake(110.0f, 450.0f, 100.0f, 40.0f);
+
     
-//    self.findMeButton = [[UIButton alloc] initWithFrame:buttonFrame];
     self.findMeButton = [[UIButton alloc] init];
     [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Find Me" forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Searching" forState:UIControlStateHighlighted];
-    [self.findMeButton addTarget:self action:@selector(buttonIsPressed:) forControlEvents:UIControlEventTouchDown];
+    [self.findMeButton addTarget:self action:@selector(findMeButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.findMeButton];
     
+    //TODO: nearestStation search method
+    self.nearestStationButton = [[UIButton alloc] init];
+    [self.nearestStationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.nearestStationButton setTitle:@"Nearest Station" forState:UIControlStateNormal];
+    [self.nearestStationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
+    [self.nearestStationButton addTarget:self action:@selector(nearestStationButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.nearestStationButton];
+    
+    //TODO: fix autolayout constraints (app breaks constraints at runtime)
     self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton);
-    NSDictionary *metrics = @{@"findMeButtonWidth":@100,@"findMeButtonHeight":@40};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(110)-[_findMeButton(findMeButtonWidth)]" options:0 metrics: metrics views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(findMeButtonHeight)]-(50)-|" options:0 metrics: metrics views:viewsDictionary]];
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton, _nearestStationButton);
+    NSDictionary *metrics = @{@"findMeButtonWidth":@100,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(<=60)-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-(>=60)-|" options:0 metrics: metrics views:viewsDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-(50)-|" options:0 metrics: metrics views:viewsDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-(50)-|" options:0 metrics:metrics views:viewsDictionary]];
     
     [self consolidateData];
 }
@@ -86,16 +103,6 @@
     [self.locationManager startUpdatingLocation];
     /* following method within viewWillAppear proved counter-productive */
 //    [self consolidateData];
-}
-
-- (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    if (size.width > size.height) {
-        // elements for landscape
-    }
-    else {
-        // elements for portrait
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -109,7 +116,7 @@
 - (void)consolidateData
 {
     NSArray *allTheData = [JSONParser locations];
-    NSMutableArray *annotationGroup = [NSMutableArray array];
+    self.annotationGroup = [NSMutableArray array];
     
     // GCD (dispatch_async) should be implemented
     // less overhead but can't be cancelled.
@@ -138,10 +145,10 @@
                                                                        title:singleStation.stationName
                                                                     subtitle:[NSString stringWithFormat:@"%@ %@",singleStation.trains, singleStation.entranceType]
                                                                     exitType:singleStation.entranceType];
-            [annotationGroup addObject:annotation];
+            [self.annotationGroup addObject:annotation];
         }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.mapView addAnnotations:annotationGroup];
+            [self.mapView addAnnotations:self.annotationGroup];
         }];
     }];
 }
@@ -184,6 +191,13 @@
     return view;
 }
 
+- (void) updateMapViewAnnotations
+{
+    // props iTunesU Hegarty
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView addAnnotations:self.annotationGroup];
+}
+
 /*
  MKOverlayRenderer
  */
@@ -209,12 +223,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) buttonIsPressed:(UIButton *)sender {
+- (void) findMeButtonIsPressed:(UIButton *)sender {
 //    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
 //    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
 //    [self.mapView setRegion:region animated:YES];
     
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    [self updateMapViewAnnotations];
+}
+
+- (void) nearestStationButtonIsPressed:(UIButton *)sender
+{
+    //TODO: nearestStation search method
+    NSLog(@"Find nearest station");
 }
 
 @end
