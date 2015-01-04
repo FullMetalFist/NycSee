@@ -28,6 +28,7 @@
 
 // place annotations in custom array for refresh purposes
 @property (strong, nonatomic) NSMutableArray *annotationGroup;
+@property (strong, nonatomic) NSMutableArray *annotationParsed;
 
 // razor-thin views to hold button in place
 @property (strong, nonatomic) UIView *leftSideView;
@@ -89,10 +90,10 @@
     //TODO: fix autolayout constraints (app breaks constraints at runtime)
     self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton, _nearestStationButton);
-    NSDictionary *metrics = @{@"findMeButtonWidth":@100,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(<=60)-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-(>=60)-|" options:0 metrics: metrics views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-(50)-|" options:0 metrics: metrics views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-(50)-|" options:0 metrics:metrics views:viewsDictionary]];
+    NSDictionary *metrics = @{@"findMeButtonWidth":@80,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-60-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-60-|" options:0 metrics: metrics views:viewsDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-50-|" options:0 metrics: metrics views:viewsDictionary]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-50-|" options:0 metrics:metrics views:viewsDictionary]];
     
     [self consolidateData];
 }
@@ -148,9 +149,39 @@
             [self.annotationGroup addObject:annotation];
         }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.mapView addAnnotations:self.annotationGroup];
+//            [self.mapView addAnnotations:self.annotationGroup];
+            [self annotationConversion];
+            [self.mapView addAnnotations:self.annotationParsed];
         }];
     }];
+}
+
+- (void) annotationConversion {
+    //create parsed array object
+    self.annotationParsed = [NSMutableArray array];
+    //create loop
+    for (Annotation *annotationChk in self.annotationGroup) {
+        // create new annotation object for each of the five types
+        
+        if ([annotationChk.exitType isEqualToString:@"Elevator"]) {
+            Annotation *annotationElevator = annotationChk;
+            
+            [self.annotationParsed addObject:annotationElevator];
+        } else if ([annotationChk.exitType isEqualToString:@"Escalator"]) {
+            Annotation *annotationEscalator = annotationChk;
+            [self.annotationParsed addObject:annotationEscalator];
+        } else if ([annotationChk.exitType isEqualToString:@"Door"]) {
+            Annotation *annotationDoor = annotationChk;
+            [self.annotationParsed addObject:annotationDoor];
+        } else if ([annotationChk.exitType isEqualToString:@"Easement"]) {
+            Annotation *annotationEasement = annotationChk;
+            [self.annotationParsed addObject:annotationEasement];
+        } else if ([annotationChk.exitType isEqualToString:@"Stair"]){
+            Annotation *annotationStair = annotationChk;
+            [self.annotationParsed addObject:annotationStair];
+        }
+    }
+    // set entrancetype
 }
 
 #pragma mark -- mapView methods

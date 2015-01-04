@@ -34,10 +34,10 @@ NSString *const kOutageDateLabelVertical = @"V:|-[_outageDateLabel]-|";
 NSString *const kExpectedReturnToServiceLabelHorizontal = @"H:|-[_expectedReturnToServiceLabel]-|";
 NSString *const kExpectedReturnToServiceLabelVertical = @"V:|[_expectedReturnToServiceLabel]-100-|";
 
-double const kXCoordinate = 20.0f;
-double const kFrameWidth = 280.0f;
-double const kFrameHeightLesser = 20.0f;
-double const kFrameHeightGreater = 40.0f;
+double const kXCoordinateDetailPage = 20.0f;
+double const kFrameWidthDetailPage = 280.0f;
+double const kFrameHeightLesserDetailPage = 20.0f;
+double const kFrameHeightGreaterDetailPage = 40.0f;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,13 +62,13 @@ double const kFrameHeightGreater = 40.0f;
     self.innerView = [[UIView alloc] initWithFrame:innerViewFrame];
     self.scrollView.delegate = self;
     
-    CGRect stationLabelFrame = CGRectMake(kXCoordinate, 10.0f, kFrameWidth, kFrameHeightGreater);
-    CGRect boroughLabelFrame = CGRectMake(kXCoordinate, 40.0f, kFrameWidth, kFrameHeightLesser);
-    CGRect trainLabelFrame = CGRectMake(kXCoordinate, 70.0f, kFrameWidth, kFrameHeightLesser);
-    CGRect typeLabelFrame = CGRectMake(kXCoordinate, 100.0f, kFrameWidth, kFrameHeightLesser);
-    CGRect servingLabelFrame = CGRectMake(kXCoordinate, 120.0f, kFrameWidth, kFrameHeightGreater);
-    CGRect outageDateLabelFrame = CGRectMake(kXCoordinate, 150.0f, kFrameWidth, kFrameHeightLesser);
-    CGRect expectedReturnToServiceLabelFrame = CGRectMake(kXCoordinate, 180.0f, kFrameWidth, kFrameHeightLesser);
+    CGRect stationLabelFrame = CGRectMake(kXCoordinateDetailPage, 10.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
+    CGRect boroughLabelFrame = CGRectMake(kXCoordinateDetailPage, 40.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect trainLabelFrame = CGRectMake(kXCoordinateDetailPage, 70.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect typeLabelFrame = CGRectMake(kXCoordinateDetailPage, 100.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect servingLabelFrame = CGRectMake(kXCoordinateDetailPage, 120.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
+    CGRect outageDateLabelFrame = CGRectMake(kXCoordinateDetailPage, 150.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect expectedReturnToServiceLabelFrame = CGRectMake(kXCoordinateDetailPage, 180.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
     
     self.stationLabel = [[UILabel alloc] initWithFrame:stationLabelFrame];
     self.boroughLabel = [[UILabel alloc] initWithFrame:boroughLabelFrame];
