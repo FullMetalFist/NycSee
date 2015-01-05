@@ -10,4 +10,6 @@
 
 @interface AnnotationView : MKAnnotationView
 
+- (void)setAnnotationData:(id<MKAnnotation>)annotation;
+
 @end

@@ -18,7 +18,15 @@
 
 - (instancetype) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setAnnotationData:annotation];
+    }
     
+    return self;
+}
+
+- (void)setAnnotationData:(id<MKAnnotation>)annotation
+{
     Annotation *exitAnnotation = (Annotation *)annotation;
     if ([exitAnnotation.exitType isEqualToString:@"Elevator"]) {
         self.image = [UIImage imageNamed:@"green.png"];
@@ -34,8 +42,6 @@
     
     self.enabled = YES;
     self.canShowCallout = YES;
-    
-    return self;
 }
 
 @end

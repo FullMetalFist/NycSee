@@ -149,40 +149,40 @@
             [self.annotationGroup addObject:annotation];
         }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//            [self.mapView addAnnotations:self.annotationGroup];
-            [self annotationConversion];
-            [self.mapView addAnnotations:self.annotationParsed];
+            [self.mapView addAnnotations:self.annotationGroup];
+//            [self annotationConversion];
+//            [self.mapView addAnnotations:self.annotationParsed];
         }];
     }];
 }
 
-- (void) annotationConversion {
-    //create parsed array object
-    self.annotationParsed = [NSMutableArray array];
-    //create loop
-    for (Annotation *annotationChk in self.annotationGroup) {
-        // create new annotation object for each of the five types
-        
-        if ([annotationChk.exitType isEqualToString:@"Elevator"]) {
-            Annotation *annotationElevator = annotationChk;
-            
-            [self.annotationParsed addObject:annotationElevator];
-        } else if ([annotationChk.exitType isEqualToString:@"Escalator"]) {
-            Annotation *annotationEscalator = annotationChk;
-            [self.annotationParsed addObject:annotationEscalator];
-        } else if ([annotationChk.exitType isEqualToString:@"Door"]) {
-            Annotation *annotationDoor = annotationChk;
-            [self.annotationParsed addObject:annotationDoor];
-        } else if ([annotationChk.exitType isEqualToString:@"Easement"]) {
-            Annotation *annotationEasement = annotationChk;
-            [self.annotationParsed addObject:annotationEasement];
-        } else if ([annotationChk.exitType isEqualToString:@"Stair"]){
-            Annotation *annotationStair = annotationChk;
-            [self.annotationParsed addObject:annotationStair];
-        }
-    }
-    // set entrancetype
-}
+//- (void) annotationConversion {
+//    //create parsed array object
+//    self.annotationParsed = [NSMutableArray array];
+//    //create loop
+//    for (Annotation *annotationChk in self.annotationGroup) {
+//        // create new annotation object for each of the five types
+//        
+//        if ([annotationChk.exitType isEqualToString:@"Elevator"]) {
+//            Annotation *annotationElevator = annotationChk;
+//            
+//            [self.annotationParsed addObject:annotationElevator];
+//        } else if ([annotationChk.exitType isEqualToString:@"Escalator"]) {
+//            Annotation *annotationEscalator = annotationChk;
+//            [self.annotationParsed addObject:annotationEscalator];
+//        } else if ([annotationChk.exitType isEqualToString:@"Door"]) {
+//            Annotation *annotationDoor = annotationChk;
+//            [self.annotationParsed addObject:annotationDoor];
+//        } else if ([annotationChk.exitType isEqualToString:@"Easement"]) {
+//            Annotation *annotationEasement = annotationChk;
+//            [self.annotationParsed addObject:annotationEasement];
+//        } else if ([annotationChk.exitType isEqualToString:@"Stair"]){
+//            Annotation *annotationStair = annotationChk;
+//            [self.annotationParsed addObject:annotationStair];
+//        }
+//    }
+//    // set entrancetype
+//}
 
 #pragma mark -- mapView methods
 
@@ -217,6 +217,8 @@
     
     if (view == nil) {
         view = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+    } else {
+        [view setAnnotationData:annotation];
     }
     
     return view;
@@ -260,7 +262,7 @@
 //    [self.mapView setRegion:region animated:YES];
     
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-    [self updateMapViewAnnotations];
+//    [self updateMapViewAnnotations];
 }
 
 - (void) nearestStationButtonIsPressed:(UIButton *)sender
