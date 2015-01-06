@@ -8,10 +8,7 @@
 
 #import "SettingsViewController.h"
 
-@interface SettingsViewController () <UIScrollViewDelegate>
-
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UIView *innerView;
+@interface SettingsViewController ()
 
 @property (strong, nonatomic) UILabel *stairsLabel;
 @property (strong, nonatomic) UILabel *easementLabel;
@@ -85,11 +82,6 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Settings";
-    CGRect innerViewFrame = CGRectMake(10.0f, 10.0f, 240, 400000);
-    NSDictionary *viewsDictionary;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    self.innerView = [[UIView alloc] initWithFrame:innerViewFrame];
-    self.scrollView.delegate = self;
     
     CGRect stairsLabelFrame = CGRectMake(kXCoordinateLabelSettingsPage, 70.0f, kFrameWidthSettingsPage, kFrameHeightLesserSettingsPage);
     CGRect easementLabelFrame = CGRectMake(kXCoordinateLabelSettingsPage, 110.0f, kFrameWidthSettingsPage, kFrameHeightLesserSettingsPage);
@@ -118,7 +110,9 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
     self.elevatorSwitch = [[UISwitch alloc] initWithFrame:elevatorSwitchFrame];
     self.escalatorSwitch = [[UISwitch alloc] initWithFrame:escalatorSwitchFrame];
     self.saveOutageSwitch = [[UISwitch alloc] initWithFrame:saveOutageSwitchFrame];
-    [self.stairsSwitch isEnabled];
+//    [self.stairsSwitch isEnabled];
+    self.stairsSwitch.userInteractionEnabled = YES;
+    [self.stairsSwitch userActivity];
     [self.easementSwitch isEnabled];
     [self.doorSwitch isEnabled];
     [self.elevatorSwitch isEnabled];
@@ -160,31 +154,19 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
     [self.escalatorSwitch setOn:YES animated:YES];
     [self.saveOutageSwitch setOn:YES animated:YES];
     
-    self.innerView.center = self.scrollView.center;
+    [self.view addSubview:self.stairsLabel];
+    [self.view addSubview:self.easementLabel];
+    [self.view addSubview:self.doorLabel];
+    [self.view addSubview:self.elevatorLabel];
+    [self.view addSubview:self.escalatorLabel];
+    [self.view addSubview:self.saveOutageLabel];
     
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.innerView];
-    [self.innerView addSubview:self.stairsLabel];
-    [self.innerView addSubview:self.easementLabel];
-    [self.innerView addSubview:self.doorLabel];
-    [self.innerView addSubview:self.elevatorLabel];
-    [self.innerView addSubview:self.escalatorLabel];
-    [self.innerView addSubview:self.saveOutageLabel];
-    
-    [self.innerView addSubview:self.stairsSwitch];
-    [self.innerView addSubview:self.easementSwitch];
-    [self.innerView addSubview:self.doorSwitch];
-    [self.innerView addSubview:self.elevatorSwitch];
-    [self.innerView addSubview:self.escalatorSwitch];
-    [self.innerView addSubview:self.saveOutageSwitch];
-    
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.innerView.translatesAutoresizingMaskIntoConstraints = NO;
-    viewsDictionary = NSDictionaryOfVariableBindings(_scrollView, _innerView);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_scrollView]|" options:0 metrics:0 views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scrollView]|" options:0 metrics:0 views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_innerView]|" options:0 metrics:0 views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_innerView]|" options:0 metrics:0 views:viewsDictionary]];
+    [self.view addSubview:self.stairsSwitch];
+    [self.view addSubview:self.easementSwitch];
+    [self.view addSubview:self.doorSwitch];
+    [self.view addSubview:self.elevatorSwitch];
+    [self.view addSubview:self.escalatorSwitch];
+    [self.view addSubview:self.saveOutageSwitch];
 }
 
 //TODO: would be nice if one function could handle all switches

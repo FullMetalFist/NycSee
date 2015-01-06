@@ -67,12 +67,13 @@
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.delegate = self;
     //self.mapView.showsUserLocation = YES; // moved to locationManager:didChangeAuthorizationStatus method
-    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
     
-
+    CGRect findMeFrame = CGRectMake(45, 470, 100, 40);
+    CGRect nearestStationFrame = CGRectMake(150, 470, 150, 40);
     
-    self.findMeButton = [[UIButton alloc] init];
+    self.findMeButton = [[UIButton alloc] initWithFrame:findMeFrame];
     [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Find Me" forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Searching" forState:UIControlStateHighlighted];
@@ -80,7 +81,7 @@
     [self.view addSubview:self.findMeButton];
     
     //TODO: nearestStation search method
-    self.nearestStationButton = [[UIButton alloc] init];
+    self.nearestStationButton = [[UIButton alloc] initWithFrame:nearestStationFrame];
     [self.nearestStationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.nearestStationButton setTitle:@"Nearest Station" forState:UIControlStateNormal];
     [self.nearestStationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
@@ -88,12 +89,12 @@
     [self.view addSubview:self.nearestStationButton];
     
     //TODO: fix autolayout constraints (app breaks constraints at runtime)
-    self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton, _nearestStationButton);
-    NSDictionary *metrics = @{@"findMeButtonWidth":@80,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-60-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-60-|" options:0 metrics: metrics views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-50-|" options:0 metrics: metrics views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-50-|" options:0 metrics:metrics views:viewsDictionary]];
+//    self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
+//    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton, _nearestStationButton);
+//    NSDictionary *metrics = @{@"findMeButtonWidth":@80,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-60-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-60-|" options:0 metrics: metrics views:viewsDictionary]];
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-50-|" options:0 metrics: metrics views:viewsDictionary]];
+//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-50-|" options:0 metrics:metrics views:viewsDictionary]];
     
     [self consolidateData];
 }
@@ -150,39 +151,9 @@
         }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self.mapView addAnnotations:self.annotationGroup];
-//            [self annotationConversion];
-//            [self.mapView addAnnotations:self.annotationParsed];
         }];
     }];
 }
-
-//- (void) annotationConversion {
-//    //create parsed array object
-//    self.annotationParsed = [NSMutableArray array];
-//    //create loop
-//    for (Annotation *annotationChk in self.annotationGroup) {
-//        // create new annotation object for each of the five types
-//        
-//        if ([annotationChk.exitType isEqualToString:@"Elevator"]) {
-//            Annotation *annotationElevator = annotationChk;
-//            
-//            [self.annotationParsed addObject:annotationElevator];
-//        } else if ([annotationChk.exitType isEqualToString:@"Escalator"]) {
-//            Annotation *annotationEscalator = annotationChk;
-//            [self.annotationParsed addObject:annotationEscalator];
-//        } else if ([annotationChk.exitType isEqualToString:@"Door"]) {
-//            Annotation *annotationDoor = annotationChk;
-//            [self.annotationParsed addObject:annotationDoor];
-//        } else if ([annotationChk.exitType isEqualToString:@"Easement"]) {
-//            Annotation *annotationEasement = annotationChk;
-//            [self.annotationParsed addObject:annotationEasement];
-//        } else if ([annotationChk.exitType isEqualToString:@"Stair"]){
-//            Annotation *annotationStair = annotationChk;
-//            [self.annotationParsed addObject:annotationStair];
-//        }
-//    }
-//    // set entrancetype
-//}
 
 #pragma mark -- mapView methods
 
@@ -224,13 +195,6 @@
     return view;
 }
 
-- (void) updateMapViewAnnotations
-{
-    // props iTunesU Hegarty
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    [self.mapView addAnnotations:self.annotationGroup];
-}
-
 /*
  MKOverlayRenderer
  */
@@ -256,13 +220,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) findMeButtonIsPressed:(UIButton *)sender {
-//    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
-//    [self.mapView setRegion:region animated:YES];
-    
+- (void) findMeButtonIsPressed:(UIButton *)sender
+{
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-//    [self updateMapViewAnnotations];
 }
 
 - (void) nearestStationButtonIsPressed:(UIButton *)sender

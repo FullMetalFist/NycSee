@@ -8,10 +8,7 @@
 
 #import "DetailViewController.h"
 
-@interface DetailViewController () <UIScrollViewDelegate>
-
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIView *innerView;
+@interface DetailViewController ()
 
 @end
 
@@ -56,12 +53,6 @@ double const kFrameHeightGreaterDetailPage = 40.0f;
     // Do any additional setup after loading the view.
     self.title = @"Outage Detail";
     
-    CGRect innerViewFrame = CGRectMake(10.0f, 10.0f, 240, 400000);
-    NSDictionary *viewsDictionary;
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    self.innerView = [[UIView alloc] initWithFrame:innerViewFrame];
-    self.scrollView.delegate = self;
-    
     CGRect stationLabelFrame = CGRectMake(kXCoordinateDetailPage, 10.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
     CGRect boroughLabelFrame = CGRectMake(kXCoordinateDetailPage, 40.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
     CGRect trainLabelFrame = CGRectMake(kXCoordinateDetailPage, 70.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
@@ -86,32 +77,20 @@ double const kFrameHeightGreaterDetailPage = 40.0f;
     self.outageDateLabel.text = self.xmlData.outageDate;
     self.expectedReturnToServiceLabel.text = self.xmlData.estimatedReturnToService;
     
-    self.innerView.center = self.scrollView.center;
     self.stationLabel.lineBreakMode = NSLineBreakByCharWrapping;
     self.stationLabel.numberOfLines = 0;
     self.servingLabel.lineBreakMode = NSLineBreakByCharWrapping;
     self.servingLabel.numberOfLines = 0;
     
-    [self.view addSubview:self.scrollView];
-    [self.scrollView addSubview:self.innerView];
-    [self.innerView addSubview:self.stationLabel];
-    [self.innerView addSubview:self.boroughLabel];
-    [self.innerView addSubview:self.trainLabel];
-    [self.innerView addSubview:self.typeLabel];
-    [self.innerView addSubview:self.servingLabel];
-    [self.innerView addSubview:self.outageDateLabel];
-    [self.innerView addSubview:self.expectedReturnToServiceLabel];
-    
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.innerView.translatesAutoresizingMaskIntoConstraints = NO;
-    viewsDictionary = NSDictionaryOfVariableBindings(_scrollView, _innerView);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scrollView]|" options:0 metrics: 0 views:viewsDictionary]];
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_innerView]|" options:0 metrics: 0 views:viewsDictionary]];
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_innerView]|" options:0 metrics: 0 views:viewsDictionary]];
+    [self.view addSubview:self.stationLabel];
+    [self.view addSubview:self.boroughLabel];
+    [self.view addSubview:self.trainLabel];
+    [self.view addSubview:self.typeLabel];
+    [self.view addSubview:self.servingLabel];
+    [self.view addSubview:self.outageDateLabel];
+    [self.view addSubview:self.expectedReturnToServiceLabel];
     
     self.view.backgroundColor = [UIColor whiteColor];           // props @orta
-
 }
 
 - (void)didReceiveMemoryWarning
