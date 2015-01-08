@@ -26,13 +26,14 @@
 @property (strong, nonatomic) UIButton *findMeButton;
 @property (strong, nonatomic) UIButton *nearestStationButton;
 
-// place annotations in custom array for refresh purposes
+// place annotations in mutable array
 @property (strong, nonatomic) NSMutableArray *annotationGroup;
-@property (strong, nonatomic) NSMutableArray *annotationParsed;
 
-// razor-thin views to hold button in place
-@property (strong, nonatomic) UIView *leftSideView;
-@property (strong, nonatomic) UIView *rightSideView;
+// necessary for directions
+@property (strong, nonatomic) MKMapItem *destination;
+@property (strong, nonatomic) MKDirectionsResponse *response;
+@property (strong, nonatomic) NSNumber *distance;
+@property (strong, nonatomic) NSArray *sortedArray;
 
 @end
 
@@ -56,20 +57,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // iOS 8 necessary methods
-    self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.delegate = self;
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-        [self.locationManager startUpdatingLocation];
-    }    
+    [self locationManagerCreation];
     
-    self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
-    self.mapView.delegate = self;
-    //self.mapView.showsUserLocation = YES; // moved to locationManager:didChangeAuthorizationStatus method
-//    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.mapView];
+    [self mapViewCreation];
     
+    [self buttonCreation];
+    
+    [self consolidateData];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // when view appears after loading...
+    [self.locationManager startUpdatingLocation];
+    /* following method within viewWillAppear proved counter-productive */
+//    [self consolidateData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager = nil;
+}
+
+- (void) buttonCreation
+{
     CGRect findMeFrame = CGRectMake(45, 470, 100, 40);
     CGRect nearestStationFrame = CGRectMake(150, 470, 150, 40);
     
@@ -87,30 +99,6 @@
     [self.nearestStationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
     [self.nearestStationButton addTarget:self action:@selector(nearestStationButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.nearestStationButton];
-    
-    //TODO: fix autolayout constraints (app breaks constraints at runtime)
-//    self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
-//    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_findMeButton, _nearestStationButton);
-//    NSDictionary *metrics = @{@"findMeButtonWidth":@80,@"nearestStationButtonWidth":@100,@"buttonHeight":@40};
-//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-60-[_findMeButton(findMeButtonWidth)][_nearestStationButton(nearestStationButtonWidth)]-60-|" options:0 metrics: metrics views:viewsDictionary]];
-//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(buttonHeight)]-50-|" options:0 metrics: metrics views:viewsDictionary]];
-//    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nearestStationButton(buttonHeight)]-50-|" options:0 metrics:metrics views:viewsDictionary]];
-    
-    [self consolidateData];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    // when view appears after loading...
-    [self.locationManager startUpdatingLocation];
-    /* following method within viewWillAppear proved counter-productive */
-//    [self consolidateData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.locationManager stopUpdatingLocation];
-    self.locationManager = nil;
 }
 
 #pragma mark -- JSON Parsing method
@@ -157,6 +145,13 @@
 
 #pragma mark -- mapView methods
 
+- (void) mapViewCreation
+{
+    self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+    self.mapView.delegate = self;
+    [self.view addSubview:self.mapView];
+}
+
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     // place boolean didSetRegion here (?)
@@ -167,13 +162,6 @@
         [self.mapView setRegion:region animated:NO];
         self.didSetRegion = YES;
     }
-    
-    /* below commands are excess */
-//    CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
-//    
-//    [self.mapView setRegion:region animated:NO];
-//    [self consolidateData];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -195,17 +183,82 @@
     return view;
 }
 
-/*
- MKOverlayRenderer
- */
+- (void) findMeButtonIsPressed:(UIButton *)sender
+{
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+}
+
+#pragma mark -- directions methods
+
+- (void) findDirectionsFrom:(MKMapItem *)source to:(MKMapItem *)destination
+{
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+    request.source = source;
+    request.destination = destination;
+    request.requestsAlternateRoutes = YES;
+    
+    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error.localizedDescription);
+        }
+        else {
+            [self showDirections:response];
+        }
+    }];
+}
+
+- (void) showDirections:(MKDirectionsResponse *)response
+{
+    self.response = response;
+    
+    for (MKRoute *route in self.response.routes) {
+        [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
+    }
+}
+
+- (void) nearestStationButtonIsPressed:(UIButton *)sender
+{
+    //TODO: nearestStation search method
+    
+    Annotation *closest = [self.sortedArray firstObject];
+    
+    NSLog(@"Find nearest station, %@", closest.title);
+}
 
 #pragma mark -- CoreLocationLocationManager methods
+
+- (void) locationManagerCreation
+{
+    // iOS 8 necessary methods
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+        [self.locationManager startUpdatingLocation];
+    }
+}
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager startUpdatingLocation];
     self.location = locations.lastObject;
+    
+    
+    // search for nearest stations
+    for (Annotation *annotation in self.mapView.annotations) {
+        CLLocationCoordinate2D coord = [annotation coordinate];
+        CLLocation *anotLocation = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+        CLLocation *newLocation = [locations lastObject];
+        annotation.distance = [newLocation distanceFromLocation:anotLocation];
+    }
+    
+    self.sortedArray = [self.mapView.annotations sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSNumber *first = [NSNumber numberWithDouble:[(Annotation *)a distance]];
+        NSNumber *second = [NSNumber numberWithDouble:[(Annotation *)b distance]];
+        return [first compare:second];
+    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
@@ -218,17 +271,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void) findMeButtonIsPressed:(UIButton *)sender
-{
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-}
-
-- (void) nearestStationButtonIsPressed:(UIButton *)sender
-{
-    //TODO: nearestStation search method
-    NSLog(@"Find nearest station");
 }
 
 @end

@@ -83,6 +83,11 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
     // Do any additional setup after loading the view.
     self.title = @"Settings";
     
+    [self drawLabelsWithSwitches];
+}
+
+- (void) drawLabelsWithSwitches
+{
     CGRect stairsLabelFrame = CGRectMake(kXCoordinateLabelSettingsPage, 70.0f, kFrameWidthSettingsPage, kFrameHeightLesserSettingsPage);
     CGRect easementLabelFrame = CGRectMake(kXCoordinateLabelSettingsPage, 110.0f, kFrameWidthSettingsPage, kFrameHeightLesserSettingsPage);
     CGRect doorLabelFrame = CGRectMake(kXCoordinateLabelSettingsPage, 150.0f, kFrameWidthSettingsPage, kFrameHeightLesserSettingsPage);
@@ -110,14 +115,6 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
     self.elevatorSwitch = [[UISwitch alloc] initWithFrame:elevatorSwitchFrame];
     self.escalatorSwitch = [[UISwitch alloc] initWithFrame:escalatorSwitchFrame];
     self.saveOutageSwitch = [[UISwitch alloc] initWithFrame:saveOutageSwitchFrame];
-//    [self.stairsSwitch isEnabled];
-    self.stairsSwitch.userInteractionEnabled = YES;
-    [self.stairsSwitch userActivity];
-    [self.easementSwitch isEnabled];
-    [self.doorSwitch isEnabled];
-    [self.elevatorSwitch isEnabled];
-    [self.escalatorSwitch isEnabled];
-    [self.saveOutageSwitch isEnabled];
     
     self.stairsLabel.text = @"Stairs Visible";
     self.easementLabel.text = @"Easement Visible";

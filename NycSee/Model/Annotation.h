@@ -17,6 +17,8 @@
 @property (nonatomic, copy, readonly) NSString *subtitle;
 @property (nonatomic, copy, readonly) NSString *exitType;
 
+@property (nonatomic) CLLocationDistance distance;
+
 - (instancetype) initWithCoordinates:(CLLocationCoordinate2D)coord
                                title:(NSString *)title
                             subtitle:(NSString *)subtitle
