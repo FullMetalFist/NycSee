@@ -39,12 +39,12 @@
     self.mapVC = [[MapViewController alloc] initWithNibName:nil bundle:nil];
     self.xmlVC = [[XMLTableViewController alloc] initWithNibName:nil bundle:nil];
     self.settingsVC = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
-    //self.settingsVC = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
     self.navController.title = @"Outages";
     self.navController.tabBarItem.image = [UIImage imageNamed:@"outage"];
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
+    self.settingsVC.tabBarItem.image = [UIImage imageNamed:@"settings"];
     self.window.rootViewController = self.tabBarController;
     
 //    [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];

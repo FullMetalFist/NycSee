@@ -32,6 +32,7 @@
 		7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */; };
 		7CB545E81981D347004AE7C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E71981D347004AE7C5 /* MapKit.framework */; };
 		7CB545EA1981D34F004AE7C5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545E91981D34F004AE7C5 /* CoreLocation.framework */; };
+		7CB623131A609684004A3215 /* StationExit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB623121A609684004A3215 /* StationExit.m */; };
 		7CFCF3AE1A2CDA7C009CD7A6 /* AnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CFCF3AD1A2CDA7C009CD7A6 /* AnnotationView.m */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,8 @@
 		7CB545E21981B3F9004AE7C5 /* XMLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLTableViewController.m; path = Controller/XMLTableViewController.m; sourceTree = "<group>"; };
 		7CB545E71981D347004AE7C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		7CB545E91981D34F004AE7C5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7CB623111A609684004A3215 /* StationExit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StationExit.h; path = Model/StationExit.h; sourceTree = "<group>"; };
+		7CB623121A609684004A3215 /* StationExit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StationExit.m; path = Model/StationExit.m; sourceTree = "<group>"; };
 		7CFCF3AC1A2CDA7C009CD7A6 /* AnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnotationView.h; path = View/AnnotationView.h; sourceTree = "<group>"; };
 		7CFCF3AD1A2CDA7C009CD7A6 /* AnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnotationView.m; path = View/AnnotationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +125,8 @@
 				7C029EC71983168500E6CC19 /* XMLData.m */,
 				7C3A43B019829609007622CE /* Annotation.h */,
 				7C3A43B119829609007622CE /* Annotation.m */,
+				7CB623111A609684004A3215 /* StationExit.h */,
+				7CB623121A609684004A3215 /* StationExit.m */,
 				7C3A43AA198293CE007622CE /* JSONParser.h */,
 				7C3A43AB198293CE007622CE /* JSONParser.m */,
 				7C3A43AD1982956F007622CE /* StationData.h */,
@@ -348,6 +353,7 @@
 				7C3A43B219829609007622CE /* Annotation.m in Sources */,
 				7CB545BB1981B2D7004AE7C5 /* main.m in Sources */,
 				7C3A43AF1982956F007622CE /* StationData.m in Sources */,
+				7CB623131A609684004A3215 /* StationExit.m in Sources */,
 				7C3A43A319828A9C007622CE /* SettingsViewController.m in Sources */,
 				7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */,
 				7C029EC81983168500E6CC19 /* XMLData.m in Sources */,

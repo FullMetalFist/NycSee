@@ -13,6 +13,8 @@
 
 #import "AnnotationView.h"
 
+#import "StationExit.h"
+
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 // locationManager property moved to .h file
@@ -82,7 +84,7 @@
 
 - (void) buttonCreation
 {
-    CGRect findMeFrame = CGRectMake(45, 470, 100, 40);
+    CGRect findMeFrame = CGRectMake(40, 470, 100, 40);
     CGRect nearestStationFrame = CGRectMake(150, 470, 150, 40);
     
     self.findMeButton = [[UIButton alloc] initWithFrame:findMeFrame];
@@ -226,6 +228,34 @@
     NSLog(@"Find nearest station, %@", closest.title);
 }
 
+#pragma mark -- Location -> Annotation math methods
+
+- (float) distanceFromUser:(CLLocationCoordinate2D)userLoc andPointOfInterest:(CLLocationCoordinate2D)pointOfInterest
+{
+    CLLocation *user = [[CLLocation alloc] initWithLatitude:userLoc.latitude longitude:userLoc.longitude];
+    CLLocation *destination = [[CLLocation alloc] initWithLatitude:pointOfInterest.latitude longitude:pointOfInterest.longitude];
+    CLLocationDistance distance = [user distanceFromLocation:destination];
+    NSString *stringDistance = [NSString stringWithFormat:@"%.2f", distance];
+    NSLog(@"%@", stringDistance);
+    return [stringDistance floatValue];
+}
+
+// cycle through annotations and find nearest one (separate queue?)
+- (CLLocationDistance) findNearestPointToUser
+{
+    Annotation *poi;
+    
+    for (poi in self.annotationGroup) {
+        if (![poi isKindOfClass:[MKUserLocation class]]) {
+            //
+            CLLocation *temp = [[CLLocation alloc] initWithLatitude:poi.coordinate.latitude longitude:poi.coordinate.longitude];
+            
+        }
+    }
+    return 0.0;
+}
+// return nearest annotation
+
 #pragma mark -- CoreLocationLocationManager methods
 
 - (void) locationManagerCreation
@@ -245,20 +275,18 @@
     [self.locationManager startUpdatingLocation];
     self.location = locations.lastObject;
     
+    Annotation *annotation; // create object
     
     // search for nearest stations
-    for (Annotation *annotation in self.mapView.annotations) {
-        CLLocationCoordinate2D coord = [annotation coordinate];
-        CLLocation *anotLocation = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
-        CLLocation *newLocation = [locations lastObject];
-        annotation.distance = [newLocation distanceFromLocation:anotLocation];
+    for (annotation in self.mapView.annotations) {
+        // check that the annotation is not the user location
+        if (![annotation isKindOfClass:[MKUserLocation class]]) {
+            CLLocationCoordinate2D coord = [annotation coordinate];
+            CLLocation *anotLocation = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+            CLLocation *newLocation = [locations lastObject];
+            annotation.distance = [newLocation distanceFromLocation:anotLocation];
+        }
     }
-    
-    self.sortedArray = [self.mapView.annotations sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSNumber *first = [NSNumber numberWithDouble:[(Annotation *)a distance]];
-        NSNumber *second = [NSNumber numberWithDouble:[(Annotation *)b distance]];
-        return [first compare:second];
-    }];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
