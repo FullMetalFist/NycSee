@@ -14,6 +14,7 @@
 #import "AnnotationView.h"
 
 #import "StationExit.h"
+#import "MapUtils.h"
 
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
@@ -164,6 +165,14 @@
         [self.mapView setRegion:region animated:NO];
         self.didSetRegion = YES;
     }
+    if (self.mapView.selectedAnnotations.count == 0) {
+        // no annotation selected
+        [self updateDistanceToAnnotation:nil];
+    }
+    else {
+        // first object in array is currently selected annotation
+        [self updateDistanceToAnnotation:[self.mapView.selectedAnnotations objectAtIndex:0]];
+    }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -183,6 +192,11 @@
     }
     
     return view;
+}
+
+- (void) mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    [self updateDistanceToAnnotation:view.annotation];
 }
 
 - (void) findMeButtonIsPressed:(UIButton *)sender
@@ -221,40 +235,34 @@
 
 - (void) nearestStationButtonIsPressed:(UIButton *)sender
 {
-    //TODO: nearestStation search method
+    //TODO: nearestStation search method.
     
-    Annotation *closest = [self.sortedArray firstObject];
-    
-    NSLog(@"Find nearest station, %@", closest.title);
 }
 
 #pragma mark -- Location -> Annotation math methods
 
-- (float) distanceFromUser:(CLLocationCoordinate2D)userLoc andPointOfInterest:(CLLocationCoordinate2D)pointOfInterest
-{
-    CLLocation *user = [[CLLocation alloc] initWithLatitude:userLoc.latitude longitude:userLoc.longitude];
-    CLLocation *destination = [[CLLocation alloc] initWithLatitude:pointOfInterest.latitude longitude:pointOfInterest.longitude];
-    CLLocationDistance distance = [user distanceFromLocation:destination];
-    NSString *stringDistance = [NSString stringWithFormat:@"%.2f", distance];
-    NSLog(@"%@", stringDistance);
-    return [stringDistance floatValue];
-}
-
 // cycle through annotations and find nearest one (separate queue?)
-- (CLLocationDistance) findNearestPointToUser
-{
-    Annotation *poi;
-    
-    for (poi in self.annotationGroup) {
-        if (![poi isKindOfClass:[MKUserLocation class]]) {
-            //
-            CLLocation *temp = [[CLLocation alloc] initWithLatitude:poi.coordinate.latitude longitude:poi.coordinate.longitude];
-            
-        }
-    }
-    return 0.0;
-}
 // return nearest annotation
+- (void) updateDistanceToAnnotation:(id<MKAnnotation>)annotation
+{
+    if (!annotation) {
+        NSLog(@"No annotation selected");
+        return;
+    }
+    if (!self.mapView.userLocation.location) {
+        NSLog(@"User location is unknown");
+        return;
+    }
+    
+    CLLocation *pinLocation = [[CLLocation alloc]
+                               initWithLatitude:annotation.coordinate.latitude
+                               longitude:annotation.coordinate.longitude];
+    CLLocation *userLocation = [[CLLocation alloc]
+                                initWithLatitude:self.mapView.userLocation.coordinate.latitude
+                                longitude:self.mapView.userLocation.coordinate.longitude];
+    CLLocationDistance distance = [pinLocation distanceFromLocation:userLocation];
+    NSLog(@"Distance to user: %4.0f m", distance);
+}
 
 #pragma mark -- CoreLocationLocationManager methods
 

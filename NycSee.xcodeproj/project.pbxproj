@@ -16,6 +16,7 @@
 		7C3A43AC198293CE007622CE /* JSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43AB198293CE007622CE /* JSONParser.m */; };
 		7C3A43AF1982956F007622CE /* StationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43AE1982956F007622CE /* StationData.m */; };
 		7C3A43B219829609007622CE /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43B119829609007622CE /* Annotation.m */; };
+		7C5E090B1A642DA800CD6DF4 /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5E090A1A642DA800CD6DF4 /* MapUtils.m */; };
 		7CB545AF1981B2D7004AE7C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545AE1981B2D7004AE7C5 /* Foundation.framework */; };
 		7CB545B11981B2D7004AE7C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */; };
 		7CB545B31981B2D7004AE7C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B21981B2D7004AE7C5 /* UIKit.framework */; };
@@ -63,6 +64,8 @@
 		7C3A43AE1982956F007622CE /* StationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StationData.m; path = Model/StationData.m; sourceTree = "<group>"; };
 		7C3A43B019829609007622CE /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annotation.h; path = Model/Annotation.h; sourceTree = "<group>"; };
 		7C3A43B119829609007622CE /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annotation.m; path = Model/Annotation.m; sourceTree = "<group>"; };
+		7C5E09091A642DA800CD6DF4 /* MapUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapUtils.h; path = Model/MapUtils.h; sourceTree = "<group>"; };
+		7C5E090A1A642DA800CD6DF4 /* MapUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapUtils.m; path = Model/MapUtils.m; sourceTree = "<group>"; };
 		7CB545AB1981B2D7004AE7C5 /* NycSee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NycSee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB545AE1981B2D7004AE7C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,6 +126,8 @@
 			children = (
 				7C029EC61983168500E6CC19 /* XMLData.h */,
 				7C029EC71983168500E6CC19 /* XMLData.m */,
+				7C5E09091A642DA800CD6DF4 /* MapUtils.h */,
+				7C5E090A1A642DA800CD6DF4 /* MapUtils.m */,
 				7C3A43B019829609007622CE /* Annotation.h */,
 				7C3A43B119829609007622CE /* Annotation.m */,
 				7CB623111A609684004A3215 /* StationExit.h */,
@@ -355,6 +360,7 @@
 				7C3A43AF1982956F007622CE /* StationData.m in Sources */,
 				7CB623131A609684004A3215 /* StationExit.m in Sources */,
 				7C3A43A319828A9C007622CE /* SettingsViewController.m in Sources */,
+				7C5E090B1A642DA800CD6DF4 /* MapUtils.m in Sources */,
 				7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */,
 				7C029EC81983168500E6CC19 /* XMLData.m in Sources */,
 				7C3A43A619828B79007622CE /* DetailViewController.m in Sources */,
