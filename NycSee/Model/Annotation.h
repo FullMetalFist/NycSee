@@ -18,6 +18,7 @@
 @property (nonatomic, copy, readonly) NSString *exitType;
 
 @property (nonatomic, assign) CLLocationDistance distance;
+@property (nonatomic, assign) BOOL visible;
 
 - (instancetype) initWithCoordinates:(CLLocationCoordinate2D)coord
                                title:(NSString *)title

@@ -9,10 +9,8 @@
 #import "AnnotationView.h"
 #import "Annotation.h"
 
-/*
- breaking this class up into categories-
-    will it help? this dev sure hopes so!
- */
+// global var
+#import "Global.h"
 
 @implementation AnnotationView
 

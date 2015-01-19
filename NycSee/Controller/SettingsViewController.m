@@ -7,6 +7,10 @@
 //
 
 #import "SettingsViewController.h"
+#import "Annotation.h"
+
+// global var
+#import "Global.h"
 
 @interface SettingsViewController ()
 
@@ -168,6 +172,52 @@ double const kFrameHeightGreaterSettingsPage = 40.0f;
 
 //TODO: would be nice if one function could handle all switches
 - (void) switchIsChanged:(UISwitch *)sender {
+    if ([sender isOn]) {
+        NSLog(@"The switch is turned on");
+    }
+    else {
+        NSLog(@"The switch is turned off");
+    }
+}
+
+#pragma mark -- switch methods
+- (void) switchStairsIsChanged:(UISwitch *)sender {
+    if ([sender isOn]) {
+        NSLog(@"The switch is turned on");
+    }
+    else {
+        NSLog(@"The switch is turned off");
+    }
+}
+
+- (void) switchEasementIsChanged:(UISwitch *)sender {
+    if ([sender isOn]) {
+        NSLog(@"The switch is turned on");
+    }
+    else {
+        NSLog(@"The switch is turned off");
+    }
+}
+
+- (void) switchDoorIsChanged:(UISwitch *)sender {
+    if ([sender isOn]) {
+        NSLog(@"The switch is turned on");
+    }
+    else {
+        NSLog(@"The switch is turned off");
+    }
+}
+
+- (void) switchElevatorIsChanged:(UISwitch *)sender {
+    if ([sender isOn]) {
+        NSLog(@"The switch is turned on");
+    }
+    else {
+        NSLog(@"The switch is turned off");
+    }
+}
+
+- (void) switchEscalatorIsChanged:(UISwitch *)sender {
     if ([sender isOn]) {
         NSLog(@"The switch is turned on");
     }

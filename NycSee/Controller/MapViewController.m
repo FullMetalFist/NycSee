@@ -16,6 +16,9 @@
 #import "StationExit.h"
 #import "MapUtils.h"
 
+// global var
+#import "Global.h"
+
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 // locationManager property moved to .h file
@@ -233,16 +236,20 @@
     }
 }
 
-- (void) nearestStationButtonIsPressed:(UIButton *)sender
-{
-    //TODO: nearestStation search method.
-    
-}
 
 #pragma mark -- Location -> Annotation math methods
 
 // cycle through annotations and find nearest one (separate queue?)
 // return nearest annotation
+
+- (void) nearestStationButtonIsPressed:(UIButton *)sender
+{
+    //TODO: nearestStation search method.
+//    CLLocation *centerLoc = [[CLLocation alloc] initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
+//    CLLocation *nearLoc = [[CLLocation alloc] initWithLatitude:[annotation coordinate].latitude longitude:[annotation coordinate].longitude];
+//    CLLocationDistance distance = [nearLoc distanceFromLocation:centerLoc];
+}
+
 - (void) updateDistanceToAnnotation:(id<MKAnnotation>)annotation
 {
     if (!annotation) {

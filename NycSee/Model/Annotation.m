@@ -11,6 +11,9 @@
 #import "JSONParser.h"
 #import "StationData.h"
 
+// global var
+#import "Global.h"
+
 @implementation Annotation
 
 - (instancetype) initWithCoordinates:(CLLocationCoordinate2D)coord
