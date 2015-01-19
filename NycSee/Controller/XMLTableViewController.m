@@ -77,6 +77,7 @@
     // Configure the cell...
     XMLData *theData = self.allDataFromXML[indexPath.row];
     cell.textLabel.text = theData.station;
+    [cell.textLabel sizeToFit];
     return cell;
 }
 

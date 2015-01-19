@@ -9,9 +9,6 @@
 #import "SettingsViewController.h"
 #import "Annotation.h"
 
-// global var
-#import "Global.h"
-
 @interface SettingsViewController ()
 
 @property (strong, nonatomic) UILabel *stairsLabel;

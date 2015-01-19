@@ -13,12 +13,6 @@
 
 #import "AnnotationView.h"
 
-#import "StationExit.h"
-#import "MapUtils.h"
-
-// global var
-#import "Global.h"
-
 @interface MapViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
 // locationManager property moved to .h file
@@ -30,16 +24,10 @@
 
 // zoom to user location button & nearest station button
 @property (strong, nonatomic) UIButton *findMeButton;
-@property (strong, nonatomic) UIButton *nearestStationButton;
+@property (strong, nonatomic) UILabel *nearestStationLabel;
 
 // place annotations in mutable array
 @property (strong, nonatomic) NSMutableArray *annotationGroup;
-
-// necessary for directions
-@property (strong, nonatomic) MKMapItem *destination;
-@property (strong, nonatomic) MKDirectionsResponse *response;
-@property (strong, nonatomic) NSNumber *distance;
-@property (strong, nonatomic) NSArray *sortedArray;
 
 @end
 
@@ -98,13 +86,8 @@
     [self.findMeButton addTarget:self action:@selector(findMeButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.findMeButton];
     
-    //TODO: nearestStation search method
-    self.nearestStationButton = [[UIButton alloc] initWithFrame:nearestStationFrame];
-    [self.nearestStationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.nearestStationButton setTitle:@"Nearest Station" forState:UIControlStateNormal];
-    [self.nearestStationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
-    [self.nearestStationButton addTarget:self action:@selector(nearestStationButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:self.nearestStationButton];
+    self.nearestStationLabel = [[UILabel alloc] initWithFrame:nearestStationFrame];
+    [self.view addSubview:self.nearestStationLabel];
 }
 
 #pragma mark -- JSON Parsing method
@@ -207,48 +190,7 @@
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
-#pragma mark -- directions methods
-
-- (void) findDirectionsFrom:(MKMapItem *)source to:(MKMapItem *)destination
-{
-    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-    request.source = source;
-    request.destination = destination;
-    request.requestsAlternateRoutes = YES;
-    
-    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error.localizedDescription);
-        }
-        else {
-            [self showDirections:response];
-        }
-    }];
-}
-
-- (void) showDirections:(MKDirectionsResponse *)response
-{
-    self.response = response;
-    
-    for (MKRoute *route in self.response.routes) {
-        [self.mapView addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
-    }
-}
-
-
 #pragma mark -- Location -> Annotation math methods
-
-// cycle through annotations and find nearest one (separate queue?)
-// return nearest annotation
-
-- (void) nearestStationButtonIsPressed:(UIButton *)sender
-{
-    //TODO: nearestStation search method.
-//    CLLocation *centerLoc = [[CLLocation alloc] initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
-//    CLLocation *nearLoc = [[CLLocation alloc] initWithLatitude:[annotation coordinate].latitude longitude:[annotation coordinate].longitude];
-//    CLLocationDistance distance = [nearLoc distanceFromLocation:centerLoc];
-}
 
 - (void) updateDistanceToAnnotation:(id<MKAnnotation>)annotation
 {
@@ -268,6 +210,8 @@
                                 initWithLatitude:self.mapView.userLocation.coordinate.latitude
                                 longitude:self.mapView.userLocation.coordinate.longitude];
     CLLocationDistance distance = [pinLocation distanceFromLocation:userLocation];
+    NSString *distanceString = [NSString stringWithFormat:@"%4.0f m away", distance];
+    self.nearestStationLabel.text = distanceString;
     NSLog(@"Distance to user: %4.0f m", distance);
 }
 

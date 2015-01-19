@@ -9,14 +9,12 @@
 #import "AppDelegate.h"
 
 #import "Controller/MapViewController.h"
-#import "Controller/SettingsViewController.h"
 #import "Controller/XMLTableViewController.h"
 
 @interface AppDelegate()
 
 @property (nonatomic, strong) MapViewController *mapVC;
 @property (nonatomic, strong) XMLTableViewController *xmlVC;
-@property (nonatomic, strong) SettingsViewController *settingsVC;
 @property (nonatomic, strong) UINavigationController *navController;
 @property (nonatomic, strong) UITabBarController *tabBarController;
 
@@ -32,24 +30,21 @@
      3: Navigation controller       (outages -> detail)     no file             navController
      4: TableView controller        (outages)                                   xmlVC
      5: Vanilla View Controller     (detail)                init in TableView   detailVC
-     6: Vanilla View Controller     (settings)                                  settingsVC  */
+     //6: Vanilla View Controller     (settings)                                  settingsVC  */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     self.mapVC = [[MapViewController alloc] initWithNibName:nil bundle:nil];
     self.xmlVC = [[XMLTableViewController alloc] initWithNibName:nil bundle:nil];
-    self.settingsVC = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     self.navController = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
     self.navController.title = @"Outages";
     self.navController.tabBarItem.image = [UIImage imageNamed:@"outage"];
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
-    self.settingsVC.tabBarItem.image = [UIImage imageNamed:@"settings"];
     self.window.rootViewController = self.tabBarController;
     
-//    [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
+    [self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
 
-    [self.tabBarController setViewControllers:@[self.mapVC, self.navController, self.settingsVC]];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

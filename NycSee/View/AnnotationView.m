@@ -9,9 +9,6 @@
 #import "AnnotationView.h"
 #import "Annotation.h"
 
-// global var
-#import "Global.h"
-
 @implementation AnnotationView
 
 - (instancetype) initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
@@ -27,15 +24,15 @@
 {
     Annotation *exitAnnotation = (Annotation *)annotation;
     if ([exitAnnotation.exitType isEqualToString:@"Elevator"]) {
-        self.image = [UIImage imageNamed:@"green.png"];
+        self.image = [UIImage imageNamed:@"greenEl.png"];
     } else if ([exitAnnotation.exitType isEqualToString:@"Escalator"]) {
-        self.image = [UIImage imageNamed:@"orange.png"];
+        self.image = [UIImage imageNamed:@"orangeEs.png"];
     } else if ([exitAnnotation.exitType isEqualToString:@"Door"]) {
-        self.image = [UIImage imageNamed:@"blue.png"];
+        self.image = [UIImage imageNamed:@"blueD.png"];
     } else if ([exitAnnotation.exitType isEqualToString:@"Easement"]) {
-        self.image = [UIImage imageNamed:@"purple.png"];
+        self.image = [UIImage imageNamed:@"purpleEa.png"];
     } else if ([exitAnnotation.exitType isEqualToString:@"Stair"]){
-        self.image = [UIImage imageNamed:@"red.png"];
+        self.image = [UIImage imageNamed:@"redSt.png"];
     }
     
     self.enabled = YES;
