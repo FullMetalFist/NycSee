@@ -7,15 +7,20 @@
 //
 
 #import "XMLTableViewController.h"
+#import "XMLTableViewCell.h"
 
 #import "Constant.h"
 #import "XMLData.h"
+
+NSString *const CellOutageIdentifier = @"outage";
 
 @interface XMLTableViewController () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSMutableArray *outages;
 @property (nonatomic, strong) NSMutableString *currentElement;
 @property (nonatomic, strong) XMLData *xmlData;
+
+@property (nonatomic, strong) UITableViewCell *cell;
 
 @end
 
@@ -37,7 +42,7 @@
     [super viewDidLoad];
     self.title = @"Outage List";
 
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"outage"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellOutageIdentifier];
     
     NSURL *url = [[NSURL alloc] initWithString:XML_DATA_URL];   // nsurlsession
     self.outages = [NSMutableArray array];
@@ -69,16 +74,31 @@
     return [self.allDataFromXML count];
 }
 
+//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static XMLTableViewCell *sizingCell;
+//    static dispatch_once_t once_token;
+//    
+//    dispatch_once(&once_token, ^{
+//        sizingCell = [[XMLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//    });
+////    XMLData *data = self.outages[indexPath.row];
+////    CGFloat (^calcCellHeight)(XMLTableViewCell *, NSString *) = ^ CGFloat(XMLTableViewCell *sizingCell, NSString *labelText){
+////        
+////        return [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
+////    };
+//    CGSize size = [self.cell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    return size.height;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"outage" forIndexPath:indexPath];
-    
+    self.cell = [tableView dequeueReusableCellWithIdentifier:CellOutageIdentifier forIndexPath:indexPath];
     // Configure the cell...
     XMLData *theData = self.allDataFromXML[indexPath.row];
-    cell.textLabel.text = theData.station;
-    [cell.textLabel sizeToFit];
-    return cell;
+    self.cell.textLabel.text = theData.station;
+    
+    return self.cell;
 }
 
 #pragma mark - Navigation

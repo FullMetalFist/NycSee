@@ -146,7 +146,7 @@
     // place boolean didSetRegion here (?)
     if (!self.didSetRegion) {
         CLLocationCoordinate2D coord = self.mapView.userLocation.location.coordinate;
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 250.0, 250.0);
         
         [self.mapView setRegion:region animated:NO];
         self.didSetRegion = YES;
