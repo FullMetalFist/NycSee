@@ -24,7 +24,13 @@
 
 // zoom to user location button & nearest station button
 @property (strong, nonatomic) UIButton *findMeButton;
-@property (strong, nonatomic) UILabel *nearestStationLabel;
+@property (strong, nonatomic) UIButton *nearestStationButton;
+
+// label to measure selected annotation distance from user
+@property (strong, nonatomic) UILabel *selectedAnnotationLabel;
+
+// nearest annotation to user
+@property (strong, nonatomic) Annotation *nearest;
 
 // place annotations in mutable array
 @property (strong, nonatomic) NSMutableArray *annotationGroup;
@@ -78,16 +84,24 @@
 {
     CGRect findMeFrame = CGRectMake(40, 470, 100, 40);
     CGRect nearestStationFrame = CGRectMake(150, 470, 150, 40);
+//    CGRect selectedAnnotationFrame = CGRectMake(170, 430, 150, 40);
     
     self.findMeButton = [[UIButton alloc] initWithFrame:findMeFrame];
     [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Find Me" forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Searching" forState:UIControlStateHighlighted];
-    [self.findMeButton addTarget:self action:@selector(findMeButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
+//    [self.findMeButton addTarget:self action:@selector(findMeButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.findMeButton];
     
-    self.nearestStationLabel = [[UILabel alloc] initWithFrame:nearestStationFrame];
-    [self.view addSubview:self.nearestStationLabel];
+//    self.nearestStationButton = [[UIButton alloc] initWithFrame:nearestStationFrame];
+//    [self.nearestStationButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//    [self.nearestStationButton setTitle:@"Nearest Station" forState:UIControlStateNormal];
+//    [self.nearestStationButton setTitle:@"Searching" forState:UIControlStateHighlighted];
+//    [self.nearestStationButton addTarget:self action:@selector(findNearestIsPressed:) forControlEvents:UIControlEventTouchDown];
+//    [self.view addSubview:self.nearestStationButton];
+    
+    self.selectedAnnotationLabel = [[UILabel alloc] initWithFrame:nearestStationFrame];
+    [self.view addSubview:self.selectedAnnotationLabel];
 }
 
 #pragma mark -- JSON Parsing method
@@ -185,10 +199,10 @@
     [self updateDistanceToAnnotation:view.annotation];
 }
 
-- (void) findMeButtonIsPressed:(UIButton *)sender
-{
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-}
+//- (void) findMeButtonIsPressed:(UIButton *)sender
+//{
+//    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+//}
 
 #pragma mark -- Location -> Annotation math methods
 
@@ -211,9 +225,30 @@
                                 longitude:self.mapView.userLocation.coordinate.longitude];
     CLLocationDistance distance = [pinLocation distanceFromLocation:userLocation];
     NSString *distanceString = [NSString stringWithFormat:@"%4.0f m away", distance];
-    self.nearestStationLabel.text = distanceString;
+    self.selectedAnnotationLabel.text = distanceString;
     NSLog(@"Distance to user: %4.0f m", distance);
 }
+
+//- (void) findNearestIsPressed:(UIButton *)sender
+//{
+////    if (self.nearest) {
+////        self.nearest = nil;
+////    }
+//    self.nearest = nil;
+//    self.nearest = [self.annotationGroup firstObject];
+//    
+//    for (Annotation *ann in self.annotationGroup) {
+//        if (ann.distance < self.nearest.distance) {
+//            self.nearest = ann;
+//        }
+//    }
+//    
+//    CLLocationCoordinate2D location = CLLocationCoordinate2DMake(self.nearest.coordinate.latitude, self.nearest.coordinate.longitude);
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 250, 250);
+//    
+//    [self.mapView setRegion:region animated:YES];
+//    [self.mapView selectAnnotation:(id<MKAnnotation>)self.nearest animated:YES];    // is this safe?
+//}
 
 #pragma mark -- CoreLocationLocationManager methods
 

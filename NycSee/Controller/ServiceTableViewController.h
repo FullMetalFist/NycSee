@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ServiceViewController.h"
+
 @interface ServiceTableViewController : UITableViewController
+
+@property (nonatomic, strong) ServiceViewController *serviceVC;
+@property (nonatomic, strong) NSMutableArray *allDataFromService;
 
 @end

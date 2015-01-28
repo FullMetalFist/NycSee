@@ -17,7 +17,8 @@
 @property (nonatomic, strong) MapViewController *mapVC;
 @property (nonatomic, strong) XMLTableViewController *xmlVC;
 @property (nonatomic, strong) ServiceTableViewController *serviceVC;
-@property (nonatomic, strong) UINavigationController *navController;
+@property (nonatomic, strong) UINavigationController *navControllerOutage;
+@property (nonatomic, strong) UINavigationController *navControllerService;
 @property (nonatomic, strong) UITabBarController *tabBarController;
 
 @end
@@ -29,11 +30,12 @@
     /* create major view controllers:
      1: Tab bar controller          (map/outages)           no file             tabBarController
      2: Map controller              (map data)                                  mapVC
-     3: Navigation controller       (outages -> detail)     no file             navController
+     3: Navigation controller       (outages -> detail)     no file             navControllerOutage
      4: TableView controller        (outages)                                   xmlVC
      5: Vanilla View Controller     (detail)                init in TableView   detailVC
-     6: TableView controller        (service changes)                           serviceVC
-     //7: Vanilla View Controller     (settings)                                  settingsVC  */
+     6: Navigation controller       (service -> detail)     no file             navControllerService
+     7: TableView controller        (service changes)                           serviceVC
+     //8: Vanilla View Controller     (settings)                                  settingsVC  */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
@@ -41,16 +43,19 @@
     self.xmlVC = [[XMLTableViewController alloc] initWithNibName:nil bundle:nil];
     self.serviceVC = [[ServiceTableViewController alloc] initWithNibName:nil bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
-    self.navController = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
-    self.navController.title = @"Outages";
-    self.navController.tabBarItem.image = [UIImage imageNamed:@"outage"];
+    self.navControllerOutage = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
+    self.navControllerOutage.title = @"Outages";
+    self.navControllerOutage.tabBarItem.image = [UIImage imageNamed:@"outage"];
+    self.navControllerService = [[UINavigationController alloc] initWithRootViewController:self.serviceVC];
+    self.navControllerService.title = @"ServiceChanges";
+    self.navControllerService.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
     self.serviceVC.title = @"Service Changes";
     self.serviceVC.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.window.rootViewController = self.tabBarController;
     
-    //[self.tabBarController setViewControllers:@[self.mapVC, self.navController]];
-    [self.tabBarController setViewControllers:@[self.mapVC, self.navController, self.serviceVC]];
+    //[self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage]];
+    [self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage, self.navControllerService]];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

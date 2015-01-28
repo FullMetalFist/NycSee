@@ -53,13 +53,13 @@ double const kFrameHeightGreaterDetailPage = 40.0f;
     // Do any additional setup after loading the view.
     self.title = @"Outage Detail";
     
-    CGRect stationLabelFrame = CGRectMake(kXCoordinateDetailPage, 10.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
-    CGRect boroughLabelFrame = CGRectMake(kXCoordinateDetailPage, 40.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
-    CGRect trainLabelFrame = CGRectMake(kXCoordinateDetailPage, 70.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
-    CGRect typeLabelFrame = CGRectMake(kXCoordinateDetailPage, 100.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
-    CGRect servingLabelFrame = CGRectMake(kXCoordinateDetailPage, 120.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
-    CGRect outageDateLabelFrame = CGRectMake(kXCoordinateDetailPage, 150.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
-    CGRect expectedReturnToServiceLabelFrame = CGRectMake(kXCoordinateDetailPage, 180.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect stationLabelFrame = CGRectMake(kXCoordinateDetailPage, 70.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
+    CGRect boroughLabelFrame = CGRectMake(kXCoordinateDetailPage, 100.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect trainLabelFrame = CGRectMake(kXCoordinateDetailPage, 130.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect typeLabelFrame = CGRectMake(kXCoordinateDetailPage, 160.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect servingLabelFrame = CGRectMake(kXCoordinateDetailPage, 180.0f, kFrameWidthDetailPage, kFrameHeightGreaterDetailPage);
+    CGRect outageDateLabelFrame = CGRectMake(kXCoordinateDetailPage, 250.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
+    CGRect expectedReturnToServiceLabelFrame = CGRectMake(kXCoordinateDetailPage, 280.0f, kFrameWidthDetailPage, kFrameHeightLesserDetailPage);
     
     self.stationLabel = [[UILabel alloc] initWithFrame:stationLabelFrame];
     self.boroughLabel = [[UILabel alloc] initWithFrame:boroughLabelFrame];
@@ -77,10 +77,10 @@ double const kFrameHeightGreaterDetailPage = 40.0f;
     self.outageDateLabel.text = self.xmlData.outageDate;
     self.expectedReturnToServiceLabel.text = self.xmlData.estimatedReturnToService;
     
-    self.stationLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    self.stationLabel.numberOfLines = 0;
-    self.servingLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    self.servingLabel.numberOfLines = 0;
+    self.stationLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.stationLabel.numberOfLines = 3;
+    self.servingLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.servingLabel.numberOfLines = 3;
     
     [self.view addSubview:self.stationLabel];
     [self.view addSubview:self.boroughLabel];

@@ -7,7 +7,6 @@
 //
 
 #import "XMLTableViewController.h"
-#import "XMLTableViewCell.h"
 
 #import "Constant.h"
 #import "XMLData.h"
@@ -20,8 +19,6 @@ NSString *const CellOutageIdentifier = @"outage";
 @property (nonatomic, strong) NSMutableString *currentElement;
 @property (nonatomic, strong) XMLData *xmlData;
 
-@property (nonatomic, strong) UITableViewCell *cell;
-
 @end
 
 @implementation XMLTableViewController
@@ -30,7 +27,6 @@ NSString *const CellOutageIdentifier = @"outage";
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
         self.title = @"Outage List";
         self.tabBarItem.image = [UIImage imageNamed:@"Outages"];
     }
@@ -54,12 +50,6 @@ NSString *const CellOutageIdentifier = @"outage";
     [parser parse];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -74,31 +64,15 @@ NSString *const CellOutageIdentifier = @"outage";
     return [self.allDataFromXML count];
 }
 
-//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static XMLTableViewCell *sizingCell;
-//    static dispatch_once_t once_token;
-//    
-//    dispatch_once(&once_token, ^{
-//        sizingCell = [[XMLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    });
-////    XMLData *data = self.outages[indexPath.row];
-////    CGFloat (^calcCellHeight)(XMLTableViewCell *, NSString *) = ^ CGFloat(XMLTableViewCell *sizingCell, NSString *labelText){
-////        
-////        return [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
-////    };
-//    CGSize size = [self.cell systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    return size.height;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.cell = [tableView dequeueReusableCellWithIdentifier:CellOutageIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellOutageIdentifier forIndexPath:indexPath];
     // Configure the cell...
     XMLData *theData = self.allDataFromXML[indexPath.row];
-    self.cell.textLabel.text = theData.station;
+    cell.textLabel.text = theData.station;
+    cell.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
-    return self.cell;
+    return cell;
 }
 
 #pragma mark - Navigation
@@ -113,7 +87,11 @@ NSString *const CellOutageIdentifier = @"outage";
 
 #pragma mark -- XML Parser methods
 
-- (void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+- (void) parser:(NSXMLParser *)parser
+didStartElement:(NSString *)elementName
+   namespaceURI:(NSString *)namespaceURI
+  qualifiedName:(NSString *)qName
+     attributes:(NSDictionary *)attributeDict
 {
     if ([elementName isEqualToString:@"outage"]) {
         self.xmlData = [[XMLData alloc] init];
@@ -144,7 +122,8 @@ NSString *const CellOutageIdentifier = @"outage";
 - (void) parseDataWithElementName:(NSString *)elementName
 {
     if ([elementName isEqualToString:@"station"]) {
-        self.xmlData.station = self.currentElement;
+        NSString *removeRedundancy = [self.currentElement stringByReplacingOccurrencesOfString:@" STATION" withString:@""];
+        self.xmlData.station = removeRedundancy;
     }
     else if ([elementName isEqualToString:@"borough"]) {
         self.xmlData.borough = self.currentElement;
