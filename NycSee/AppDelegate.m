@@ -10,13 +10,13 @@
 
 #import "Controller/MapViewController.h"
 #import "Controller/XMLTableViewController.h"
-#import "Controller/ServiceTableViewController.h"
+#import "Controller/ServiceViewController.h"
 
 @interface AppDelegate()
 
 @property (nonatomic, strong) MapViewController *mapVC;
 @property (nonatomic, strong) XMLTableViewController *xmlVC;
-@property (nonatomic, strong) ServiceTableViewController *serviceVC;
+@property (nonatomic, strong) ServiceViewController *serviceVC;
 @property (nonatomic, strong) UINavigationController *navControllerOutage;
 @property (nonatomic, strong) UINavigationController *navControllerService;
 @property (nonatomic, strong) UITabBarController *tabBarController;
@@ -34,28 +34,29 @@
      4: TableView controller        (outages)                                   xmlVC
      5: Vanilla View Controller     (detail)                init in TableView   detailVC
      6: Navigation controller       (service -> detail)     no file             navControllerService
-     7: TableView controller        (service changes)                           serviceVC
+     7: TableView controller        (service changes)       abandoned           serviceVC
+     7: Vanilla View Controller     (service changes)       UIWebView           serviceVC
      //8: Vanilla View Controller     (settings)                                  settingsVC  */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     self.mapVC = [[MapViewController alloc] initWithNibName:nil bundle:nil];
     self.xmlVC = [[XMLTableViewController alloc] initWithNibName:nil bundle:nil];
-    self.serviceVC = [[ServiceTableViewController alloc] initWithNibName:nil bundle:nil];
+    self.serviceVC = [[ServiceViewController alloc] initWithNibName:nil bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     self.navControllerOutage = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
     self.navControllerOutage.title = @"Outages";
     self.navControllerOutage.tabBarItem.image = [UIImage imageNamed:@"outage"];
-    self.navControllerService = [[UINavigationController alloc] initWithRootViewController:self.serviceVC];
-    self.navControllerService.title = @"ServiceChanges";
-    self.navControllerService.tabBarItem.image = [UIImage imageNamed:@"wrench"];
+//    self.navControllerService = [[UINavigationController alloc] initWithRootViewController:self.serviceVC];
+//    self.navControllerService.title = @"ServiceChanges";
+//    self.navControllerService.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
     self.serviceVC.title = @"Service Changes";
     self.serviceVC.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.window.rootViewController = self.tabBarController;
     
     //[self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage]];
-    [self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage, self.navControllerService]];
+    [self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage, self.serviceVC]];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

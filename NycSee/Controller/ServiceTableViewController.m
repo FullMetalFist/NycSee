@@ -138,7 +138,7 @@ NSString *const CellServiceIdentifier = @"service";
 {
     self.serviceVC = [[ServiceViewController alloc] initWithNibName:nil bundle:nil];
     XMLServiceData *theData = self.allDataFromService[indexPath.row];
-    self.serviceVC.xmlServiceData = theData;
+    //self.serviceVC.xmlServiceData = theData;
     [self.navigationController pushViewController:self.serviceVC animated:YES];
 }
 
