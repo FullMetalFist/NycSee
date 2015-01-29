@@ -23,6 +23,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
+    CGRect topOff = self.textView.frame;
+    topOff.origin.y = 30;
+    self.textView.frame = topOff;
+    
     self.textView.editable = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -44,17 +48,15 @@
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
-    NSLog(@"%@", modifiedTemp);     // gives desired output
     
     // lets take this a bit further and remove <STRONG>,</STRONG>,<br/>,<P>,</P> tags.
-    // also remove partial tags <span class=",">,</span>
+    // Â will not disappear
+    // remove <text />,Show Reroute Details
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"<STRONG>" withString:@""];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"</STRONG>" withString:@""];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"Â" withString:@""];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"<text />" withString:@"<br/><br/>"];
     modifiedTemp = [modifiedTemp stringByReplacingOccurrencesOfString:@"Show Reroute Details" withString:@""];
-    
-    NSLog(@"%@", modifiedTemp);     // gives desired output
     
     NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
     

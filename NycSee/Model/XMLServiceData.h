@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *status;
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *time;
 

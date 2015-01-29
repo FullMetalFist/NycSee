@@ -90,7 +90,7 @@ double const kFrameHeightGreaterDetailPage = 40.0f;
     [self.view addSubview:self.outageDateLabel];
     [self.view addSubview:self.expectedReturnToServiceLabel];
     
-    self.view.backgroundColor = [UIColor whiteColor];           // props @orta
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning
