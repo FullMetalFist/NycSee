@@ -24,7 +24,7 @@
     
     self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
     CGRect topOff = self.textView.frame;
-    topOff.origin.y = 30;
+    topOff.origin.y = 40;
     self.textView.frame = topOff;
     
     self.textView.editable = NO;

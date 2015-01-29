@@ -81,7 +81,7 @@
 - (void) buttonCreation
 {
     CGRect findMeFrame = CGRectMake(40, 470, 100, 40);
-    CGRect selectedAnnotationFrame = CGRectMake(150, 470, 150, 40);
+    CGRect selectedAnnotationFrame = CGRectMake(180, 470, 150, 40);
     
     self.findMeButton = [[UIButton alloc] initWithFrame:findMeFrame];
     [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
