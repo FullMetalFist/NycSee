@@ -32,7 +32,7 @@
     
     self.url = [[NSURL alloc] initWithString:SERVICE_STATUS_URL];
     NSError *error = [[NSError alloc] init];
-    NSData *data = [[NSData alloc] initWithContentsOfURL:self.url options:NSUTF8StringEncoding error:&error];
+    NSData *data = [[NSData alloc] initWithContentsOfURL:self.url options:NSISOLatin1StringEncoding error:&error];
     data = [self replaceHTMLentities:data];
     
     [self.view addSubview:self.textView];
@@ -40,7 +40,7 @@
 
 - (NSData *) replaceHTMLentities:(NSData *)data
 {
-    NSString *htmlCode = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *htmlCode = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
     NSMutableString *temp = [NSMutableString stringWithString:htmlCode];
     
     NSString *modifiedTemp = [NSString string];
@@ -60,7 +60,7 @@
     
     NSDictionary *options = @{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType};
     
-    NSData *completedData = [modifiedTemp dataUsingEncoding:NSUTF8StringEncoding]; // necessary for completion
+    NSData *completedData = [modifiedTemp dataUsingEncoding:NSISOLatin1StringEncoding]; // necessary for completion
     
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithData:completedData options:options documentAttributes:nil error:nil];
     self.textView.attributedText = attributedString;
