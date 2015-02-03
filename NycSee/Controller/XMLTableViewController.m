@@ -44,10 +44,15 @@ NSString *const CellOutageIdentifier = @"outage";
     self.outages = [NSMutableArray array];
     self.allDataFromXML = [NSMutableArray array];
     self.xmlData = [[XMLData alloc] init];
-    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-    [parser setDelegate:self];
-    [parser parse];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+        [parser setDelegate:self];
+        
+        [parser parse];
+    });
+    
 }
 
 #pragma mark - Table view data source
@@ -147,5 +152,13 @@ didStartElement:(NSString *)elementName
         self.xmlData.estimatedReturnToService = self.currentElement;
     }
 }
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 
 @end
