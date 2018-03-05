@@ -28,6 +28,7 @@
     self.textView.frame = topOff;
     
     self.textView.editable = NO;
+    self.textView.textContainerInset = UIEdgeInsetsMake(0, 0, 40, 0);
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     self.url = [[NSURL alloc] initWithString:SERVICE_STATUS_URL];

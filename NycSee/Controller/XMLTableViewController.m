@@ -52,7 +52,6 @@ NSString *const CellOutageIdentifier = @"outage";
         
         [parser parse];
     });
-    
 }
 
 #pragma mark - Table view data source
