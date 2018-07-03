@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -33,19 +34,9 @@
     
     self.url = [[NSURL alloc] initWithString:SERVICE_STATUS_URL];
     
-    NSOperationQueue *backgroundQueue = [[NSOperationQueue alloc] init];
-    [backgroundQueue addOperationWithBlock:^{
-        
-        NSData *data = [[NSData alloc] initWithContentsOfURL:self.url options:NSISOLatin1StringEncoding error:nil];
-        data = [self replaceHTMLentities:data];
-
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.view addSubview:self.textView];
-        }];
-    }];       // getting 0xbbadbeef when dispatch_async is run
-
-//     NSData *data = [[NSData alloc] initWithContentsOfURL:self.url options:NSISOLatin1StringEncoding error:nil];
-//    data = [self replaceHTMLentities:data];
+    [self configureRefreshControl];
+    
+    [self fetchServiceStatus];
 }
 
 - (NSData *) replaceHTMLentities:(NSData *)data
@@ -84,6 +75,26 @@
     else {
         return nil;
     }
+}
+
+- (void) configureRefreshControl {
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchServiceStatus) forControlEvents:UIControlEventValueChanged];
+    [self.textView addSubview:self.refreshControl];
+}
+
+- (void) fetchServiceStatus {
+    NSOperationQueue *backgroundQueue = [[NSOperationQueue alloc] init];
+    [backgroundQueue addOperationWithBlock:^{
+        
+        NSData *data = [[NSData alloc] initWithContentsOfURL:self.url options:NSISOLatin1StringEncoding error:nil];
+        data = [self replaceHTMLentities:data];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.view addSubview:self.textView];
+            [self.refreshControl endRefreshing];
+        }];
+    }];       // getting 0xbbadbeef when dispatch_async is run
 }
 
 @end
