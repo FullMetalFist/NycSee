@@ -62,6 +62,7 @@
     [self mapViewCreation];
     
     [self buttonCreation];
+    [self createConstraints];
     
     [self consolidateData];
 }
@@ -80,19 +81,37 @@
 
 - (void) buttonCreation
 {
-    CGRect findMeFrame = CGRectMake(40, 470, 100, 40);
-    CGRect selectedAnnotationFrame = CGRectMake(180, 470, 150, 40);
+    CGRect findMeFrame = CGRectMake(0, 0, 100, 40);//CGRectMake(40, 430, 100, 40);
+    CGRect selectedAnnotationFrame = CGRectMake(0, 0, 150, 40);//CGRectMake(180, 470, 150, 40);
+    UIColor *beigeColor = [[UIColor alloc] initWithRed:249.0/255.0 green:247.0/255.0 blue:249.0/255.0 alpha:1.0];
     
     self.findMeButton = [[UIButton alloc] initWithFrame:findMeFrame];
+    self.findMeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.findMeButton.backgroundColor = beigeColor;
     [self.findMeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Find Me" forState:UIControlStateNormal];
     [self.findMeButton setTitle:@"Searching" forState:UIControlStateHighlighted];
     [self.findMeButton addTarget:self action:@selector(findMeButtonIsPressed:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:self.findMeButton];
+    [self.mapView addSubview:self.findMeButton];
     
     self.selectedAnnotationLabel = [[UILabel alloc] initWithFrame:selectedAnnotationFrame];
-    [self.view addSubview:self.selectedAnnotationLabel];
+    self.selectedAnnotationLabel.textAlignment = NSTextAlignmentCenter;
+    self.selectedAnnotationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.mapView addSubview:self.selectedAnnotationLabel];
 }
+
+//- (void) buttonConstraints
+//{
+//    NSLayoutConstraint *buttonSizeH = [NSLayoutConstraint constraintWithItem:self.findMeButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.findMeButton attribute:NSLayoutAttributeHeight multiplier:1.0f constant:40];
+//    NSLayoutConstraint *buttonSizeW = [NSLayoutConstraint constraintWithItem:self.findMeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.findMeButton attribute:NSLayoutAttributeWidth multiplier:1.0f constant:100];
+//    NSLayoutConstraint *buttonLeading = [NSLayoutConstraint constraintWithItem:self.findMeButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:40];
+//    NSLayoutConstraint *buttonBottom = [NSLayoutConstraint constraintWithItem:self.findMeButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:20];
+//    NSLayoutConstraint *labelSizeH = [NSLayoutConstraint constraintWithItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeHeight multiplier:1.0 constant:40];
+//    NSLayoutConstraint *labelSizeW = [NSLayoutConstraint constraintWithItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeWidth multiplier:1.0 constant:150];
+//    NSLayoutConstraint *labelTrailing = [NSLayoutConstraint constraintWithItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:40];
+//    NSLayoutConstraint *labelBottom = [NSLayoutConstraint constraintWithItem:self.selectedAnnotationLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.mapView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:20];
+//    [NSLayoutConstraint activateConstraints:@[buttonSizeH, buttonSizeW, buttonLeading, buttonBottom, labelSizeH, labelSizeW, labelBottom, labelTrailing]];
+//}
 
 #pragma mark -- JSON Parsing method
 
@@ -140,10 +159,40 @@
 
 - (void) mapViewCreation
 {
-    self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+    CGRect mapViewRect = CGRectMake(0, 0, 1, 1);
+    self.mapView = [[MKMapView alloc] initWithFrame:mapViewRect];
     self.mapView.delegate = self;
+    self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.mapView];
 }
+
+- (void) createConstraints
+{
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_mapView, _findMeButton, _selectedAnnotationLabel);
+    NSArray *H_MapConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mapView]|" options:0 metrics:nil views:viewsDict];
+    NSArray *V_MapConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mapView]|" options:0 metrics:nil views:viewsDict];
+    NSArray *H_ButtonLabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_findMeButton(==100)]-(>=10)-[_selectedAnnotationLabel(==130)]-20-|" options:0 metrics:nil views:viewsDict];
+//    NSArray *H_LabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_selectedAnnotationLabel(==150)]-30-|" options:0 metrics:nil views:viewsDict];
+    NSArray *V_ButtonConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_findMeButton(==40)]-(90)-|" options:0 metrics:nil views:viewsDict];
+    NSArray *V_LabelConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_selectedAnnotationLabel(==40)]-(90)-|" options:0 metrics:nil views:viewsDict];
+    
+    [self.view addConstraints:H_MapConstraint];
+    [self.view addConstraints:V_MapConstraint];
+    [self.view addConstraints:H_ButtonLabelConstraint];
+//    [self.view addConstraints:H_LabelConstraint];
+    [self.view addConstraints:V_ButtonConstraint];
+    [self.view addConstraints:V_LabelConstraint];
+}
+
+//- (void) mapViewConstraints
+//{
+//    NSLayoutConstraint *mapViewTopConstraint = [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0];
+//    NSLayoutConstraint *mapViewLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0];
+//    NSLayoutConstraint *mapViewTrailingConstraint = [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0];
+//    NSLayoutConstraint *mapViewBottomConstraint = [NSLayoutConstraint constraintWithItem:self.mapView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0];
+//    [self.view addConstraints:@[mapViewTopConstraint, mapViewLeadingConstraint, mapViewTrailingConstraint, mapViewBottomConstraint]];
+//
+//}
 
 - (void) mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
