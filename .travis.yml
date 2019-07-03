@@ -1,4 +1,4 @@
 language: objective-c
 xcode_project: NycSee.xcodeproj
 xcode_scheme: NycSee
-xcode_destination: platform=iOS Simulator,OS=10.1,name=iPhone X
+xcode_destination: platform=iOS Simulator,OS=11.4,name=iPhone X
