@@ -47,15 +47,11 @@
     self.navControllerOutage = [[UINavigationController alloc] initWithRootViewController:self.xmlVC];
     self.navControllerOutage.title = @"Outages";
     self.navControllerOutage.tabBarItem.image = [UIImage imageNamed:@"outage"];
-//    self.navControllerService = [[UINavigationController alloc] initWithRootViewController:self.serviceVC];
-//    self.navControllerService.title = @"ServiceChanges";
-//    self.navControllerService.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.mapVC.tabBarItem.image = [UIImage imageNamed:@"map"];
     self.serviceVC.title = @"Service Changes";
     self.serviceVC.tabBarItem.image = [UIImage imageNamed:@"wrench"];
     self.window.rootViewController = self.tabBarController;
     
-    //[self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage]];
     [self.tabBarController setViewControllers:@[self.mapVC, self.navControllerOutage, self.serviceVC]];
     
     // Override point for customization after application launch.

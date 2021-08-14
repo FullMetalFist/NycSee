@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C029EC51983162200E6CC19 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC41983162200E6CC19 /* Constant.m */; };
 		7C029EC81983168500E6CC19 /* XMLData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C029EC71983168500E6CC19 /* XMLData.m */; };
 		7C1974A21A534451007A7490 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1974A11A534451007A7490 /* CoreData.framework */; };
 		7C3A43A619828B79007622CE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A43A519828B79007622CE /* DetailViewController.m */; };
@@ -18,6 +17,7 @@
 		7C411FDF20EEE6B00036A92B /* FindMeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C411FDE20EEE6B00036A92B /* FindMeButton.m */; };
 		7C55BC0A1A6DF45300D7B884 /* XMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C55BC091A6DF45300D7B884 /* XMLTableViewCell.m */; };
 		7C6EBB9F1A6EE0E800676BC3 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6EBB9E1A6EE0E800676BC3 /* ServiceViewController.m */; };
+		7C915E9026C7D700000ED91D /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C915E8F26C7D700000ED91D /* Constant.m */; };
 		7CB545AF1981B2D7004AE7C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545AE1981B2D7004AE7C5 /* Foundation.framework */; };
 		7CB545B11981B2D7004AE7C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */; };
 		7CB545B31981B2D7004AE7C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB545B21981B2D7004AE7C5 /* UIKit.framework */; };
@@ -48,8 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7C029EC31983162200E6CC19 /* Constant.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = Constant.h; sourceTree = "<group>"; };
-		7C029EC41983162200E6CC19 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		7C029EC61983168500E6CC19 /* XMLData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLData.h; path = Model/XMLData.h; sourceTree = "<group>"; };
 		7C029EC71983168500E6CC19 /* XMLData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLData.m; path = Model/XMLData.m; sourceTree = "<group>"; };
 		7C1974A11A534451007A7490 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -68,6 +66,8 @@
 		7C55BC091A6DF45300D7B884 /* XMLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLTableViewCell.m; path = Controller/XMLTableViewCell.m; sourceTree = "<group>"; };
 		7C6EBB9D1A6EE0E800676BC3 /* ServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServiceViewController.h; path = Controller/ServiceViewController.h; sourceTree = "<group>"; };
 		7C6EBB9E1A6EE0E800676BC3 /* ServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServiceViewController.m; path = Controller/ServiceViewController.m; sourceTree = "<group>"; };
+		7C915E8F26C7D700000ED91D /* Constant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
+		7C915E9326C7D71A000ED91D /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		7CB545AB1981B2D7004AE7C5 /* NycSee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NycSee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB545AE1981B2D7004AE7C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7CB545B01981B2D7004AE7C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,12 +187,12 @@
 		7CB545B51981B2D7004AE7C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7C029EC31983162200E6CC19 /* Constant.h */,
-				7C029EC41983162200E6CC19 /* Constant.m */,
 				7CB545B61981B2D7004AE7C5 /* NycSee-Info.plist */,
 				7CB545B71981B2D7004AE7C5 /* InfoPlist.strings */,
 				7CB545BA1981B2D7004AE7C5 /* main.m */,
 				7CB545BC1981B2D7004AE7C5 /* NycSee-Prefix.pch */,
+				7C915E8F26C7D700000ED91D /* Constant.m */,
+				7C915E9326C7D71A000ED91D /* Constant.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -358,9 +358,9 @@
 				7CB545BF1981B2D7004AE7C5 /* AppDelegate.m in Sources */,
 				7C6EBB9F1A6EE0E800676BC3 /* ServiceViewController.m in Sources */,
 				7C55BC0A1A6DF45300D7B884 /* XMLTableViewCell.m in Sources */,
-				7C029EC51983162200E6CC19 /* Constant.m in Sources */,
 				7C3A43B219829609007622CE /* Annotation.m in Sources */,
 				7CB545BB1981B2D7004AE7C5 /* main.m in Sources */,
+				7C915E9026C7D700000ED91D /* Constant.m in Sources */,
 				7C3A43AF1982956F007622CE /* StationData.m in Sources */,
 				7CB545E31981B3F9004AE7C5 /* XMLTableViewController.m in Sources */,
 				7C029EC81983168500E6CC19 /* XMLData.m in Sources */,
